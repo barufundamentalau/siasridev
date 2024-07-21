@@ -16,12 +16,12 @@ function CardPendaftaran() {
   const [jenisPasien, setJenisPasien] = useState('lama')
   const [norm, setNorm] = useState('')
   const [tanggalLahir, setTanggalLahir] = useState('')
-  const [nikPasien, setNikPasien] = useState('')
-  const [namaPasien, setNamaPasien] = useState('')
-  const [tempatLahir, setTempatLahir] = useState('')
-  const [kontakPasien, setKontakPasien] = useState('')
-  const [noRekamMedis, setNoRekamMedis] = useState('')
-  const [jenisDisabilitas, setJenisDisabilitas] = useState('')
+  // const [nikPasien, setNikPasien] = useState('')
+  // const [namaPasien, setNamaPasien] = useState('')
+  // const [tempatLahir, setTempatLahir] = useState('')
+  // const [kontakPasien, setKontakPasien] = useState('')
+  // const [noRekamMedis, setNoRekamMedis] = useState('')
+  // const [jenisDisabilitas, setJenisDisabilitas] = useState('')
 
   //state loading
   const [loading, setLoading] = useState(false)
@@ -57,27 +57,33 @@ function CardPendaftaran() {
       const response = await fetch(url)
       const data = await response.json()
 
-      if (response.ok && data.data && data.data.data.length > 0) {
-        const foundPatient = data.data.data[0]
+      if (response.ok && data.data.dataPasien.data[0]) {
+        const foundPatient = data.data.dataPasien.data[0]
+        const penjamin = data.data.penjamin.data
+        console.log(penjamin)
 
         // Mendapatkan data dari array
-        const nik =
-          foundPatient.KARTUIDENTITAS.length > 0
-            ? foundPatient.KARTUIDENTITAS[0].NOMOR
-            : 'Tidak Ada'
-        const kontak =
-          foundPatient.KONTAK.length > 0
-            ? foundPatient.KONTAK[0].NOMOR
-            : 'Tidak Ada'
+        // const nik =
+        //   foundPatient.KARTUIDENTITAS.length > 0
+        //     ? foundPatient.KARTUIDENTITAS[0].NOMOR
+        //     : 'Tidak Ada'
+        // const kontak =
+        //   foundPatient.KONTAK.length > 0
+        //     ? foundPatient.KONTAK[0].NOMOR
+        //     : 'Tidak Ada'
+        // const kontak =
+        //   foundPatient.KONTAK.length > 0
+        //     ? foundPatient.KONTAK[0].NOMOR
+        //     : 'Tidak Ada'
+        // const kontak =
+        //   foundPatient.KONTAK.length > 0
+        //     ? foundPatient.KONTAK[0].NOMOR
+        //     : 'Tidak Ada'
 
         navigate('/registrasi', {
           state: {
-            norm: foundPatient.NORM,
-            nama: foundPatient.NAMA,
-            tempatLahir: foundPatient.REFERENSI.TEMPATLAHIR.DESKRIPSI,
-            tanggalLahir: foundPatient.TANGGAL_LAHIR,
-            nik: nik,
-            kontak: kontak,
+            dataPasien: foundPatient,
+            penjamin: penjamin,
           },
         })
 

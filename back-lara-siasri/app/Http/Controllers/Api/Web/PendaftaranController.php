@@ -22,7 +22,7 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        $url = 'https://simrs.kotamobagu.go.id/apps/RegOnline/api/pasien/';
+        $url = 'http://36.67.82.229:806/apps/RegOnline/api/pasien/';
         $response = $client->post($url, [
             'multipart' => [
                 [
@@ -35,7 +35,14 @@ class PendaftaranController extends Controller
                 ]
             ]
         ]);
-
+        if (isset($response)) {
+            $url2 = 'http://36.67.82.229:806/apps/RegOnline/api/carabayar/';
+            $response2 = $client->get($url2, [
+                'headers' => [
+                    'Content-Type' => 'multipart/form-data',
+                ]
+            ]);
+        }
         // $response = $client->post($url, [
         //     'headers' => [
         //         'Content-Type' => 'multipart/form-data',
@@ -43,7 +50,11 @@ class PendaftaranController extends Controller
         // ]);
 
         //return with Api Resource
-        return new PendaftaranResource(true, 'List Data Pasien', json_decode($response->getBody()->getContents()));
+        return new PendaftaranResource(true, 'List Data Pasien', [
+            'dataPasien' => json_decode($response->getBody()->getContents()),
+            'penjamin' => json_decode($response2->getBody()->getContents())
+
+        ]);
     }
 
     /**
