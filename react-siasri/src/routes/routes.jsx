@@ -120,6 +120,9 @@ import WebPendaftaranShow from '../pages/web/pendaftaran/Show.jsx'
 //import view web thx Show
 import WebThxShow from '../pages/web/pendaftaran/Thx.jsx'
 
+//import view web ambil antrian Show
+import WebAmbilAntrianShow from '../pages/web/pendaftaran/AmbilAntrian.jsx'
+
 //import view web registrasi Show
 import WebRegistrasiShow from '../pages/web/pendaftaran/Registrasi.jsx'
 
@@ -407,6 +410,9 @@ function RoutesIndex() {
 
       {/* route "/jadwal" */}
       <Route path='/jadwal-dokter' element={<WebJadwalShow />} />
+
+      {/* route "/ambilantrian" */}
+      <Route path='/ambil-antrian' element={<WebAmbilAntrianShow />} />
 
       {/* route "/search" */}
       <Route path='/search' element={<WebSearch />} />

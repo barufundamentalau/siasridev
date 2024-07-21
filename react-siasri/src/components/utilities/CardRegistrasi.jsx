@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
+//import moment
 import moment from 'moment'
 
 //import BASE URL API
 import Api from '../../api'
 
-//import BASE URL API
+//import BASE URL API SIMRS
 import Simrs from '../../api/simrs'
 
+//import toast
 import toast from 'react-hot-toast'
 
+//import toast
 import { Link, useLocation } from 'react-router-dom'
 
 export default function CardRegistrasi() {
@@ -23,7 +26,12 @@ export default function CardRegistrasi() {
   const [klinik, setKlinik] = useState('')
   const [loadingKlinik, setLoadingKlinik] = useState(false)
   const [nomorKartu, setNomorKartu] = useState('')
+  const [nomorRujukan, setNomorRujukan] = useState('')
   const [jadwals, setJadwals] = useState([])
+  const [openjamin, setoPenjamin] = useState('')
+  const [jadwalDokter, setJadwalDokter] = useState('')
+  const [tanggalKunjungan, setTanggalKunjungan] = useState('')
+  const [dataRujukanDitemukan, setDataRujukanDitemukan] = useState(false)
 
   // fetch data kliniks
   const fetchDataKlinikTujuans = async () => {
@@ -38,18 +46,23 @@ export default function CardRegistrasi() {
       setLoadingKlinik(false)
     })
   }
-  const fetchDataRujukans = async () => {
+
+  // fetch data rujukan
+  const fetchDataRujukans = async (a) => {
     // fetchDataRujukan "true"
     // setLoadingRujukan(true)
     //fetch data
     await Simrs.get(
       'webservice/registrasionline/plugins/getListRujukanKartu?noKartu=' +
         nomorKartu +
-        '&faskes=1'
+        '&faskes=' +
+        a
     ).then((response) => {
       console.log(response)
       if (response.data.success) {
-        toast.success('Data pasien berhasil ditemukan!', {
+        setNomorRujukan(response.data.data.rujukan[0].noKunjungan)
+        setKlinik(response.data.data.rujukan[0].poliRujukan.kode)
+        toast.success('Data rujukan berhasil ditemukan!', {
           duration: 4000,
           position: 'top-right',
           style: {
@@ -59,7 +72,7 @@ export default function CardRegistrasi() {
           },
         })
       } else {
-        toast.error('data rujukan tidak ditemukan.', {
+        toast.error('Data rujukan tidak ditemukan.', {
           duration: 4000,
           position: 'top-right',
           style: {
@@ -80,15 +93,12 @@ export default function CardRegistrasi() {
 
   // fetch data jadwals
   const fetchDataJadwals = async () => {
-    // fetchDataRujukan "true"
-    // setLoadingRujukan(true)
-    //fetch data
-    await Simrs.get(
-      '/apps/RegOnline//api/jadwaldokter/?TANGGAL=2024-07-22&POLI=' + klinik
-    ).then((response) => {
-      console.log(response)
+    try {
+      const response = await Simrs.get(
+        `/apps/RegOnline//api/jadwaldokter/?TANGGAL=${tanggalKunjungan}&POLI=${klinik}`
+      )
       if (response.data.success) {
-        toast.success('Data pasien berhasil ditemukan!', {
+        toast.success('Data jadwal dokter berhasil ditemukan!', {
           duration: 4000,
           position: 'top-right',
           style: {
@@ -97,8 +107,9 @@ export default function CardRegistrasi() {
             color: '#fff',
           },
         })
+        setJadwals(response.data.data)
       } else {
-        toast.error('data rujukan tidak ditemukan.', {
+        toast.error('Data jadwal dokter tidak ditemukan.', {
           duration: 4000,
           position: 'top-right',
           style: {
@@ -108,36 +119,45 @@ export default function CardRegistrasi() {
           },
         })
       }
-
-      //assign response to state "Rujukans"
-      // setoRujukans(response.data.data.data)
-
-      //setLoadingService "false"
-      // setLoadingRujukan(false)
-    })
+    } catch (error) {
+      toast.error('Terjadi kesalahan saat mengambil data jadwal.', {
+        duration: 4000,
+        position: 'top-right',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      })
+    }
   }
 
   useEffect(() => {
     // panggil metode "fetchDataKlinikTujuans"
     fetchDataKlinikTujuans()
   }, [])
+
   useEffect(() => {
     if (klinik !== '') {
       fetchDataJadwals()
     }
   }, [klinik])
+  // useEffect(() => {
+  //   if (nomorKartu > 12) {
+  //     fetchDataRujukans()
+  //   }
+  // }, [nomorKartu])
 
-  // Format tanggal menggunakan moment.js
-  const formatTanggal = (dateString) => {
-    return dateString ? moment(dateString).format('YYYY-MM-DD') : ''
-  }
-
-  const [openjamin, setoPenjamin] = useState('')
   // const [isBpjsJkn, setIsBpjsJkn] = useState(false)
 
   useEffect(() => {
     console.log(state)
   }, [dataPasien])
+
+  // Format tanggal menggunakan moment.js
+  const formatTanggal = (dateString) => {
+    return dateString ? moment(dateString).format('YYYY-MM-DD') : ''
+  }
 
   return (
     <div className='row'>
@@ -179,7 +199,7 @@ export default function CardRegistrasi() {
               <input
                 type='text'
                 className='form-control'
-                value={dataPasien.REFERENSI.TEMPATLAHIR.DESKRIPSI}
+                value={dataPasien.TEMPAT_LAHIR}
                 placeholder='Tempat Lahir'
                 readOnly
               />
@@ -191,7 +211,7 @@ export default function CardRegistrasi() {
               <input
                 type='text'
                 className='form-control'
-                value={dataPasien.TANGGAL_LAHIR}
+                value={formatTanggal(dataPasien.TANGGAL_LAHIR)}
                 placeholder='Tanggal Lahir'
                 readOnly
               />
@@ -248,34 +268,65 @@ export default function CardRegistrasi() {
                   })}
               </select>
             </div>
+            <div className='col mb-3 mt-2'>
+              <label className='mb-1'>Tanggal Kunjungan:</label>
+              <input
+                type='date'
+                className='form-control'
+                value={tanggalKunjungan}
+                onChange={(e) => setTanggalKunjungan(e.target.value)}
+                required
+              />
+            </div>
+            <div className='row'>
+              {openjamin === '2' && (
+                <div className='col-md-6 col-sm-6'>
+                  <label className=' mb-1'>No. Kartu Jaminan JKN / BPJS:</label>
+                  <input
+                    type='text'
+                    className='form-control'
+                    placeholder='No. Kartu Jaminan JKN / BPJS'
+                    value={nomorKartu}
+                    onChange={(e) => {
+                      setNomorKartu(e.target.value)
+                    }}
+                  />
+                </div>
+              )}
+              {openjamin === '2' && (
+                <div className='col-md-6 col-sm-6 mt-md-4'>
+                  <button
+                    className='btn btn-success shadow-sm rounded-sm m-1'
+                    onClick={() => {
+                      fetchDataRujukans(1)
+                    }}
+                  >
+                    Cari Rujukan
+                  </button>
+                  <button
+                    className='btn btn-success shadow-sm rounded-sm'
+                    onClick={() => {
+                      fetchDataRujukans(2)
+                    }}
+                  >
+                    Kontrol / SPRI
+                  </button>
+                </div>
+              )}
+            </div>
+
             {openjamin === '2' && (
-              <div className='form-group'>
-                <label className='mb-1'>No. Kartu Jaminan JKN / BPJS:</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  placeholder='No. Kartu Jaminan JKN / BPJS'
-                  value={nomorKartu}
-                  onChange={(e) => {
-                    setNomorKartu(e.target.value)
-                    if (e.target.value.length > 12) {
-                      fetchDataRujukans()
-                    }
-                  }}
-                />
-              </div>
-            )}
-            {openjamin === '2' && (
-              <div className='form-group'>
+              <div className='form-group mt-4'>
                 <label className='mb-1'>Masukkan No. Rujukan:</label>
                 <input
                   type='text'
                   className='form-control'
                   placeholder='Masukkan No. Rujukan'
+                  value={nomorRujukan}
+                  disabled
                 />
               </div>
             )}
-
             <div className='form-group custom-select select'>
               <label className='mb-1'>Klinik Tujuan</label>
               <select
@@ -284,6 +335,7 @@ export default function CardRegistrasi() {
                 onChange={(e) => {
                   setKlinik(e.target.value)
                 }}
+                disabled={openjamin === '2' ? true : false}
               >
                 {okliniks &&
                   okliniks.map((d, k) => {
@@ -305,17 +357,19 @@ export default function CardRegistrasi() {
                 <option value='' disabled>
                   Pilih Dokter
                 </option>
-                <option value='DR A'>DR A</option>
-                <option value='DR B'>DR B</option>
-                <option value='DR C'>DR C</option>
+                {jadwals.map((jadwal) => (
+                  <option key={jadwal.ID} value={jadwal.KD_DOKTER}>
+                    {jadwal.NM_DOKTER} ({jadwal.NM_HARI} {jadwal.JAM})
+                  </option>
+                ))}
               </select>
             </div>
-            <Link
-              to='/ambilantrian'
+            <button
+              to='/ambil-antrian'
               className='btn btn-success shadow-sm rounded-sm px-4 w-100'
             >
               Ambil Antrian
-            </Link>
+            </button>
           </div>
         </div>
       </div>
