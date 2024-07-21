@@ -1,0 +1,230 @@
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+export default function CardPendaftaran() {
+  const [jenisPasien, setJenisPasien] = useState('lama')
+  const [nikPasien, setNikPasien] = useState('')
+  const [namaPasien, setNamaPasien] = useState('')
+  const [tempatLahir, setTempatLahir] = useState('')
+  const [tanggalLahir, setTanggalLahir] = useState('')
+  const [kontakPasien, setKontakPasien] = useState('')
+  const [noRekamMedis, setNoRekamMedis] = useState('')
+  const [jenisDisabilitas, setJenisDisabilitas] = useState('')
+
+  const handleJenisPasienChange = (event) => {
+    setJenisPasien(event.target.value)
+  }
+
+  const handleNikPasienChange = (event) => {
+    setNikPasien(event.target.value)
+  }
+
+  const handleNamaPasienChange = (event) => {
+    setNamaPasien(event.target.value)
+  }
+
+  const handleTempatLahirChange = (event) => {
+    setTempatLahir(event.target.value)
+  }
+
+  const handleTanggalLahirChange = (event) => {
+    setTanggalLahir(event.target.value)
+  }
+
+  const handleKontakPasienChange = (event) => {
+    setKontakPasien(event.target.value)
+  }
+
+  const handleNoRekamMedisChange = (event) => {
+    setNoRekamMedis(event.target.value)
+  }
+
+  const handleJenisDisabilitasChange = (event) => {
+    setJenisDisabilitas(event.target.value)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // Lakukan sesuatu dengan data formulir
+    console.log({
+      jenisPasien,
+      nikPasien,
+      namaPasien,
+      tempatLahir,
+      tanggalLahir,
+      kontakPasien,
+      noRekamMedis,
+      jenisDisabilitas,
+    })
+    // Reset nilai formulir setelah submit
+    setNikPasien('')
+    setNamaPasien('')
+    setTempatLahir('')
+    setTanggalLahir('')
+    setKontakPasien('')
+    setNoRekamMedis('')
+    setJenisDisabilitas('')
+  }
+
+  return (
+    <div className='card border-0 rounded shadow-sm'>
+      <div className='card-body'>
+        <h5 className='card-title'>Formulir Pendaftaran</h5>
+        <hr />
+        <div className='form-group'>
+          <label>Pilih :</label>
+          <div className='form-check form-check-inline'>
+            <input
+              className='form-check-input'
+              type='radio'
+              name='jenisPasien'
+              id='pasienLama'
+              value='lama'
+              checked={jenisPasien === 'lama'}
+              onChange={handleJenisPasienChange}
+            />
+            <label className='form-check-label' htmlFor='pasienLama'>
+              Pasien Lama
+            </label>
+          </div>
+          <div className='form-check form-check-inline'>
+            <input
+              className='form-check-input'
+              type='radio'
+              name='jenisPasien'
+              id='pasienBaru'
+              value='baru'
+              checked={jenisPasien === 'baru'}
+              onChange={handleJenisPasienChange}
+            />
+            <label className='form-check-label' htmlFor='pasienBaru'>
+              Pasien Baru
+            </label>
+          </div>
+        </div>
+        <hr />
+        {jenisPasien === 'baru' && (
+          <form onSubmit={handleSubmit}>
+            <div className='row'>
+              <div className='col-md-6 mb-3'>
+                <label>Pasien Prioritas:</label>
+                <select
+                  value={jenisDisabilitas}
+                  onChange={handleJenisDisabilitasChange}
+                  className='form-control'
+                  required
+                >
+                  <option value=''>Pilih Prioritas</option>
+                  <option value='lanjutUsia'>Lanjut Usia 65 Tahun</option>
+                  <option value='ibuHamil'>Ibu Hamil / Menyusui</option>
+                  <option value='bayiBalita'>Bayi / Balita</option>
+                  <option value='penyandangDisabilitas'>
+                    Penyandang Disabilitas
+                  </option>
+                </select>
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Nik Pasien:</label>
+                <input
+                  type='text'
+                  value={nikPasien}
+                  onChange={handleNikPasienChange}
+                  className='form-control'
+                  placeholder='Masukkan Nik Pasien'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Nama Pasien:</label>
+                <input
+                  type='text'
+                  value={namaPasien}
+                  onChange={handleNamaPasienChange}
+                  className='form-control'
+                  placeholder='Masukkan Nama Pasien'
+                  required
+                />
+              </div>
+
+              <div className='col-md-6 mb-3'>
+                <label>Kontak Pasien:</label>
+                <input
+                  type='text'
+                  value={kontakPasien}
+                  onChange={handleKontakPasienChange}
+                  className='form-control'
+                  placeholder='Masukkan Kontak Pasien'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Tempat Lahir:</label>
+                <input
+                  type='text'
+                  value={tempatLahir}
+                  onChange={handleTempatLahirChange}
+                  className='form-control'
+                  placeholder='Masukkan Tempat Lahir'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Tanggal Lahir:</label>
+                <input
+                  type='date'
+                  value={tanggalLahir}
+                  onChange={handleTanggalLahirChange}
+                  className='form-control'
+                  required
+                />
+              </div>
+              <div className='col-md-12'>
+                <Link
+                  to='/terimakasih'
+                  className='btn btn-success shadow-sm rounded-sm px-4 w-100'
+                >
+                  Lanjut
+                </Link>
+              </div>
+            </div>
+          </form>
+        )}
+        {jenisPasien === 'lama' && (
+          <form onSubmit={handleSubmit}>
+            <div className='row'>
+              <div className='col-md-6 mb-3'>
+                <label>No. Rekam Medis / NIK:</label>
+                <input
+                  type='text'
+                  value={noRekamMedis}
+                  onChange={handleNoRekamMedisChange}
+                  className='form-control'
+                  placeholder='Masukkan No. Rekam Medis / NIK'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Tanggal Lahir:</label>
+                <input
+                  type='date'
+                  value={tanggalLahir}
+                  onChange={handleTanggalLahirChange}
+                  className='form-control'
+                  required
+                />
+              </div>
+              <div className='col-md-12'>
+                <Link
+                  to='/terimakasih'
+                  className='btn btn-success shadow-sm rounded-sm px-4 w-100'
+                >
+                  Lanjut
+                </Link>
+              </div>
+            </div>
+          </form>
+        )}
+      </div>
+    </div>
+  )
+}
