@@ -12,7 +12,24 @@ function WebRawatinapShow() {
     <React.Fragment>
       <LayoutWeb>
         <div className='container mt-80'>
-          <Card10Kasus />
+          <div className='row'>
+            <div className='col-md-12'>
+              <h4 className='text-center'>
+                <strong className='text-uppercase'>
+                  10 KASUS TERBESAR DIAGNOSA
+                </strong>
+              </h4>
+              <hr />
+            </div>
+            <div className='col-md-12 mb-4'>
+              <Card10Kasus />
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-md-12 text-center'>
+              <small className='text-muted'>Powered by SIMRS</small>
+            </div>
+          </div>
         </div>
       </LayoutWeb>
     </React.Fragment>

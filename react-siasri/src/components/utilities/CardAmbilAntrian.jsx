@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function CardAmbilAntrian(props) {
+export default function CardAmbilAntrian() {
   return (
     <div className='row'>
       <div className='col-md-7 mb-4'>

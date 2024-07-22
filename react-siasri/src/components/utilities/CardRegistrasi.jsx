@@ -48,20 +48,61 @@ export default function CardRegistrasi() {
   }
 
   // fetch data rujukan
+  // const fetchDataRujukans = async (a) => {
+  //   // fetchDataRujukan "true"
+  //   // setLoadingRujukan(true)
+  //   //fetch data
+  //   await Simrs.get(
+  //     'webservice/registrasionline/plugins/getListRujukanKartu?noKartu=' +
+  //       nomorKartu +
+  //       '&faskes=' +
+  //       a
+  //   ).then((response) => {
+  //     console.log(response)
+  //     if (response.data.success) {
+  //       setNomorRujukan(response.data.data.rujukan[0].noKunjungan)
+  //       setKlinik(response.data.data.rujukan[0].poliRujukan.kode)
+  //       toast.success('Data rujukan berhasil ditemukan!', {
+  //         duration: 4000,
+  //         position: 'top-right',
+  //         style: {
+  //           borderRadius: '10px',
+  //           background: '#333',
+  //           color: '#fff',
+  //         },
+  //       })
+  //     } else {
+  //       toast.error('Data rujukan tidak ditemukan.', {
+  //         duration: 4000,
+  //         position: 'top-right',
+  //         style: {
+  //           borderRadius: '10px',
+  //           background: '#333',
+  //           color: '#fff',
+  //         },
+  //       })
+  //     }
+
+  //     //assign response to state "Rujukans"
+  //     // setoRujukans(response.data.data.data)
+
+  //     //setLoadingService "false"
+  //     // setLoadingRujukan(false)
+  //   })
+  // }
+  // Fetch data rujukan
   const fetchDataRujukans = async (a) => {
-    // fetchDataRujukan "true"
-    // setLoadingRujukan(true)
-    //fetch data
+    setDataRujukanDitemukan(false) // Reset status rujukan saat pencarian
     await Simrs.get(
       'webservice/registrasionline/plugins/getListRujukanKartu?noKartu=' +
         nomorKartu +
         '&faskes=' +
         a
     ).then((response) => {
-      console.log(response)
-      if (response.data.success) {
+      if (response.data.success && response.data.data.rujukan.length > 0) {
         setNomorRujukan(response.data.data.rujukan[0].noKunjungan)
         setKlinik(response.data.data.rujukan[0].poliRujukan.kode)
+        setDataRujukanDitemukan(true) // Data rujukan ditemukan
         toast.success('Data rujukan berhasil ditemukan!', {
           duration: 4000,
           position: 'top-right',
@@ -72,6 +113,7 @@ export default function CardRegistrasi() {
           },
         })
       } else {
+        setNomorRujukan('')
         toast.error('Data rujukan tidak ditemukan.', {
           duration: 4000,
           position: 'top-right',
@@ -82,12 +124,6 @@ export default function CardRegistrasi() {
           },
         })
       }
-
-      //assign response to state "Rujukans"
-      // setoRujukans(response.data.data.data)
-
-      //setLoadingService "false"
-      // setLoadingRujukan(false)
     })
   }
 
@@ -170,7 +206,7 @@ export default function CardRegistrasi() {
             <hr />
             <div className='input-group mb-3'>
               <span className='input-group-text'>
-                <i className='fa fa-check'></i>
+                <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NO. REKAM MEDIS
               </span>
               <input
                 type='text'
@@ -182,7 +218,7 @@ export default function CardRegistrasi() {
             </div>
             <div className='input-group mb-3'>
               <span className='input-group-text'>
-                <i className='fa fa-check'></i>
+                <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NAMA
               </span>
               <input
                 type='text'
@@ -194,7 +230,7 @@ export default function CardRegistrasi() {
             </div>
             <div className='input-group mb-3'>
               <span className='input-group-text'>
-                <i className='fa fa-check'></i>
+                <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>TEMPAT LAHIR
               </span>
               <input
                 type='text'
@@ -206,7 +242,7 @@ export default function CardRegistrasi() {
             </div>
             <div className='input-group mb-3'>
               <span className='input-group-text'>
-                <i className='fa fa-check'></i>
+                <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>TGL. LAHIR
               </span>
               <input
                 type='text'
@@ -218,7 +254,7 @@ export default function CardRegistrasi() {
             </div>
             <div className='input-group mb-3'>
               <span className='input-group-text'>
-                <i className='fa fa-check'></i>
+                <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NIK
               </span>
               <input
                 type='text'
@@ -230,7 +266,7 @@ export default function CardRegistrasi() {
             </div>
             <div className='input-group mb-3'>
               <span className='input-group-text'>
-                <i className='fa fa-check'></i>
+                <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NO. HP
               </span>
               <input
                 type='text'
@@ -247,8 +283,7 @@ export default function CardRegistrasi() {
         <div className='card border-0 rounded shadow-sm'>
           <div className='card-body'>
             <h5>
-              <i className='fa fa-hospital-user'></i> FILTER PENJAMIN / CARA
-              BAYAR
+              <i className='fa fa-hospital-user'></i> PENJAMIN / CARA BAYAR
             </h5>
             <hr />
             <div className='form-group custom-select select'>
@@ -268,8 +303,20 @@ export default function CardRegistrasi() {
                   })}
               </select>
             </div>
+            <div className='mb-3 mt-2'>
+              <label>Pasien Prioritas</label>
+              <select value='' onChange='' className='form-control' required>
+                <option value=''>Pilih Prioritas</option>
+                <option value='lanjutUsia'>Lanjut Usia 65 Tahun</option>
+                <option value='ibuHamil'>Ibu Hamil / Menyusui</option>
+                <option value='bayiBalita'>Bayi / Balita</option>
+                <option value='penyandangDisabilitas'>
+                  Penyandang Disabilitas
+                </option>
+              </select>
+            </div>
             <div className='col mb-3 mt-2'>
-              <label className='mb-1'>Tanggal Kunjungan:</label>
+              <label className='mb-1'>Tanggal Kunjungan</label>
               <input
                 type='date'
                 className='form-control'
@@ -281,7 +328,7 @@ export default function CardRegistrasi() {
             <div className='row'>
               {openjamin === '2' && (
                 <div className='col-md-6 col-sm-6'>
-                  <label className=' mb-1'>No. Kartu Jaminan JKN / BPJS:</label>
+                  <label className=' mb-1'>No. Kartu Jaminan JKN / BPJS</label>
                   <input
                     type='text'
                     className='form-control'
@@ -317,11 +364,11 @@ export default function CardRegistrasi() {
 
             {openjamin === '2' && (
               <div className='form-group mt-4'>
-                <label className='mb-1'>Masukkan No. Rujukan:</label>
+                <label className='mb-1'>Nomor Rujukan</label>
                 <input
                   type='text'
                   className='form-control'
-                  placeholder='Masukkan No. Rujukan'
+                  placeholder='Nomor Rujukan'
                   value={nomorRujukan}
                   disabled
                 />
@@ -352,7 +399,7 @@ export default function CardRegistrasi() {
               </select>
             </div>
             <div className='form-group custom-select select'>
-              <label className='mb-1'>Dokter</label>
+              <label className='mb-1'>Pilih Dokter</label>
               <select className='form-control mb-3' defaultValue=''>
                 <option value='' disabled>
                   Pilih Dokter
@@ -365,10 +412,11 @@ export default function CardRegistrasi() {
               </select>
             </div>
             <button
-              to='/ambil-antrian'
+              // to='/ambil-antrian'
               className='btn btn-success shadow-sm rounded-sm px-4 w-100'
+              disabled={openjamin === '2' && !dataRujukanDitemukan} // Disable tombol berdasarkan status rujukan
             >
-              Ambil Antrian
+              AMBIL ANTRIAN
             </button>
           </div>
         </div>

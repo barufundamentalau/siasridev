@@ -180,7 +180,7 @@ function WebHeader() {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  LIHAT BERITA{'\t'}
+                  LIHAT BERITA RSUD KOTAMOBAGU{'\t'}
                   <i className='fa fa-long-arrow-alt-right'></i>
                 </NavDropdown.Item>
               </NavDropdown>

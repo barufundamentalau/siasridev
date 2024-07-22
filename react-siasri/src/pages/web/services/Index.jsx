@@ -17,7 +17,7 @@ import CardService from '../../../components/utilities/CardService'
 
 export default function WebServicesIndex() {
   //title page
-  document.title = 'Services - Si Asri'
+  document.title = 'Layanan - Si Asri'
 
   //init state
   const [services, setServices] = useState([])
@@ -47,30 +47,32 @@ export default function WebServicesIndex() {
   return (
     <React.Fragment>
       <LayoutWeb>
-        <div className='container mt-4 mb-3'>
+        <div className='container mt-80'>
           <div className='row'>
             <div className='col-md-12'>
-              <h5 className='text-uppercase'>
-                <i className='fa fa-user-circle'></i> Service - Si Asri
-              </h5>
+              <h4 className='text-center'>
+                <strong className='text-uppercase'>
+                  LAYANAN RSUD KOTAMOBAGU
+                </strong>
+              </h4>
               <hr />
             </div>
-          </div>
-          <div className='row mt-4'>
-            {loadingService ? (
-              <Loading />
-            ) : services.length > 0 ? (
-              services.map((service) => (
-                <CardService
-                  key={service.id}
-                  name={service.name}
-                  image={service.image}
-                  phone={service.phone}
-                />
-              ))
-            ) : (
-              <AlertDataEmpty />
-            )}
+            <div className='mt-2'>
+              {loadingService ? (
+                <Loading />
+              ) : services.length > 0 ? (
+                services.map((service) => (
+                  <CardService
+                    key={service.id}
+                    name={service.name}
+                    image={service.image}
+                    phone={service.phone}
+                  />
+                ))
+              ) : (
+                <AlertDataEmpty />
+              )}
+            </div>
           </div>
         </div>
       </LayoutWeb>

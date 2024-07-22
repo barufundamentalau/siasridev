@@ -9,15 +9,24 @@ function WebRegistrasiShow() {
         <div className='container mt-80'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4>
+              <h4 className='text-center'>
                 <strong className='text-uppercase'>
-                  REGISTRASI ANTRIAN PASIEN BARU
+                  REGISTRASI ANTRIAN PASIEN PRIORITAS
                 </strong>
               </h4>
               <hr />
             </div>
           </div>
-          <CardRegistrasi />
+          <div className='col-md-12 mb-4'>
+            <div class='mt-0'>
+              <CardRegistrasi />
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-md-12 text-center'>
+              <small className='text-muted'>Powered by SIMRS</small>
+            </div>
+          </div>
         </div>
       </LayoutWeb>
     </React.Fragment>

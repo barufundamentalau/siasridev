@@ -65,7 +65,7 @@ function WebPengunjungShow() {
         <div className='container mt-80'>
           <div className='row'>
             <div className='col-md-12'>
-              <h4>
+              <h4 className='text-center'>
                 <strong className='text-uppercase'>
                   PENGUNJUNG RSUD KOTAMOBAGU
                 </strong>

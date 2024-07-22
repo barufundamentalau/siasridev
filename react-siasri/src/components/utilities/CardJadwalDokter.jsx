@@ -53,7 +53,7 @@ function CardJadwalDokter() {
   return (
     <div className='row'>
       <div className='col-md-12'>
-        <h4>
+        <h4 className='text-center'>
           <strong className='text-uppercase'>Jadwal Dokter</strong>
         </h4>
         <hr />
@@ -79,32 +79,34 @@ function CardJadwalDokter() {
                   </select>
                 </h5>
                 <hr />
-                <table className='table table-bordered table-striped'>
-                  <thead>
-                    <tr>
-                      <th scope='col'>NO.</th>
-                      <th scope='col'>KLINIK</th>
-                      <th scope='col'>DOKTER</th>
-                      <th scope='col'>JAM</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {loadingJadwal ? (
-                      <Loading />
-                    ) : jadwals.length > 0 ? (
-                      filteredJadwals.map((jadwal, index) => (
-                        <tr key={jadwal.ID}>
-                          <td>{index + 1}</td>
-                          <td>{jadwal.REFERENSI.POLI.NMPOLI}</td>
-                          <td>{jadwal.NM_DOKTER}</td>
-                          <td>{jadwal.JAM}</td>
-                        </tr>
-                      ))
-                    ) : (
-                      <AlertDataEmpty />
-                    )}
-                  </tbody>
-                </table>
+                <div className='table-responsive'>
+                  <table className='table table-bordered table-striped'>
+                    <thead>
+                      <tr>
+                        <th scope='col'>NO.</th>
+                        <th scope='col'>KLINIK</th>
+                        <th scope='col'>DOKTER</th>
+                        <th scope='col'>JAM</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {loadingJadwal ? (
+                        <Loading />
+                      ) : jadwals.length > 0 ? (
+                        filteredJadwals.map((jadwal, index) => (
+                          <tr key={jadwal.ID}>
+                            <td>{index + 1}</td>
+                            <td>{jadwal.REFERENSI.POLI.NMPOLI}</td>
+                            <td>{jadwal.NM_DOKTER}</td>
+                            <td>{jadwal.JAM}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <AlertDataEmpty />
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

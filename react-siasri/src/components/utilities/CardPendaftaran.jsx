@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import Api from '../../api'
-import DatePicker from 'react-datepicker'
+// import Api from '../../api'
+// import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 
 function CardPendaftaran() {
   //title page
-  document.title = 'Pendaftaran Pasien'
+  document.title = 'Pendaftaran Pasien Prioritas'
 
   //navigate
   const navigate = useNavigate()
@@ -31,20 +31,6 @@ function CardPendaftaran() {
   //   setTanggalLahir(date)
   // }
 
-  //handle change for combined input
-  // const handleCombinedInputChange = (e) => {
-  //   const inputValue = e.target.value
-
-  //   // Check if the input is 16 characters and is a number (for NIK)
-  //   if (/^\d{16}$/.test(inputValue)) {
-  //     setNikPasien(inputValue)
-  //     setNoRekamMedis('')
-  //   } else {
-  //     setNoRekamMedis(inputValue)
-  //     setNikPasien('')
-  //   }
-  // }
-
   //function "pasienLamaHandler"
   const pasienLamaHandler = async (event) => {
     event.preventDefault()
@@ -60,25 +46,7 @@ function CardPendaftaran() {
       if (response.ok && data.data.dataPasien.data[0]) {
         const foundPatient = data.data.dataPasien.data[0]
         const penjamin = data.data.penjamin.data
-        console.log(penjamin)
-
-        // Mendapatkan data dari array
-        // const nik =
-        //   foundPatient.KARTUIDENTITAS.length > 0
-        //     ? foundPatient.KARTUIDENTITAS[0].NOMOR
-        //     : 'Tidak Ada'
-        // const kontak =
-        //   foundPatient.KONTAK.length > 0
-        //     ? foundPatient.KONTAK[0].NOMOR
-        //     : 'Tidak Ada'
-        // const kontak =
-        //   foundPatient.KONTAK.length > 0
-        //     ? foundPatient.KONTAK[0].NOMOR
-        //     : 'Tidak Ada'
-        // const kontak =
-        //   foundPatient.KONTAK.length > 0
-        //     ? foundPatient.KONTAK[0].NOMOR
-        //     : 'Tidak Ada'
+        // console.log(penjamin)
 
         navigate('/registrasi', {
           state: {
@@ -160,6 +128,87 @@ function CardPendaftaran() {
           </div>
         </div>
         <hr />
+        {jenisPasien === 'baru' && (
+          <form onSubmit=''>
+            <div className='row'>
+              <div className='col-md-6 mb-3'>
+                <label>Pasien Prioritas:</label>
+                <select value='' onChange='' className='form-control' required>
+                  <option value=''>Pilih Prioritas</option>
+                  <option value='lanjutUsia'>Lanjut Usia 65 Tahun</option>
+                  <option value='ibuHamil'>Ibu Hamil / Menyusui</option>
+                  <option value='bayiBalita'>Bayi / Balita</option>
+                  <option value='penyandangDisabilitas'>
+                    Penyandang Disabilitas
+                  </option>
+                </select>
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Nik Pasien:</label>
+                <input
+                  type='text'
+                  value=''
+                  onChange=''
+                  className='form-control'
+                  placeholder='Masukkan Nik Pasien'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Nama Pasien:</label>
+                <input
+                  type='text'
+                  value=''
+                  onChange=''
+                  className='form-control'
+                  placeholder='Masukkan Nama Pasien'
+                  required
+                />
+              </div>
+
+              <div className='col-md-6 mb-3'>
+                <label>Kontak Pasien:</label>
+                <input
+                  type='text'
+                  value=''
+                  onChange=''
+                  className='form-control'
+                  placeholder='Masukkan Kontak Pasien'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Tempat Lahir:</label>
+                <input
+                  type='text'
+                  value=''
+                  onChange=''
+                  className='form-control'
+                  placeholder='Masukkan Tempat Lahir'
+                  required
+                />
+              </div>
+              <div className='col-md-6 mb-3'>
+                <label>Tanggal Lahir:</label>
+                <input
+                  type='date'
+                  value=''
+                  onChange=''
+                  className='form-control'
+                  required
+                />
+              </div>
+              <div className='col-md-12'>
+                <Link
+                  to='/registrasi'
+                  className='btn btn-success shadow-sm rounded-sm px-4 w-100'
+                >
+                  Lanjut
+                </Link>
+              </div>
+            </div>
+          </form>
+        )}
         {jenisPasien === 'lama' && (
           <form onSubmit={pasienLamaHandler}>
             <div className='row'>
@@ -192,7 +241,7 @@ function CardPendaftaran() {
                   className='btn btn-success shadow-sm rounded-sm px-4 w-100'
                   disabled={loading}
                 >
-                  {loading ? 'Loading...' : 'KIRIM'}
+                  {loading ? 'LOADING...' : 'LANJUT'}
                 </button>
               </div>
             </div>

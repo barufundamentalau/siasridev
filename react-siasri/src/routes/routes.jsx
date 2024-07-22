@@ -117,9 +117,6 @@ import Web10KasusTerbesarShow from '../pages/web/10kasusterbesar/Show.jsx'
 //import view web pendaftaran Show
 import WebPendaftaranShow from '../pages/web/pendaftaran/Show.jsx'
 
-//import view web thx Show
-import WebThxShow from '../pages/web/pendaftaran/Thx.jsx'
-
 //import view web ambil antrian Show
 import WebAmbilAntrianShow from '../pages/web/pendaftaran/AmbilAntrian.jsx'
 
@@ -398,9 +395,6 @@ function RoutesIndex() {
 
       {/* route "/pendaftaran" */}
       <Route path='/pendaftaran' element={<WebPendaftaranShow />} />
-
-      {/* route "/thx" */}
-      <Route path='/terimakasih' element={<WebThxShow />} />
 
       {/* route "/registasi" */}
       <Route path='/registrasi' element={<WebRegistrasiShow />} />

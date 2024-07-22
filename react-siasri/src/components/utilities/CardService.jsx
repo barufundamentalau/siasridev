@@ -9,7 +9,10 @@ export default function CardService(props) {
       >
         <div className='card-body mt-2'>
           <div className='text-center mb-3'>
-            <img src={props.image} className='w-50 rounded-pill' />
+            <img
+              src={props.image}
+              className='w-100 rounded-lg p-2 mb-2 bg-light'
+            />
           </div>
           <h5>{props.name}</h5>
           <hr />

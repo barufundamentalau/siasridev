@@ -79,7 +79,7 @@ function WebPlaceDirection() {
   }, [])
 
   // Set document title
-  document.title = 'Map Direction - SI ASRI - Si Asri'
+  document.title = 'Map Lokasi - Si Asri'
 
   return (
     <LayoutWeb>
@@ -92,11 +92,10 @@ function WebPlaceDirection() {
                   to={`/lokasi/${slug}`}
                   className='float-end btn btn-success btn-sm mb-2'
                 >
-                  <i className='fa fa-long-arrow-alt-left'></i> BACK TO PLACE
+                  <i className='fa fa-long-arrow-alt-left'></i> KEMBALI
                 </Link>
                 <h5>
-                  <i className='fa fa-location-arrow'></i> DIRECTION FROM USER
-                  LOCATION
+                  <i className='fa fa-location-arrow'></i> ARAH LOKASI
                 </h5>
                 <hr />
                 <div
