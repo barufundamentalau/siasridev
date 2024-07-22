@@ -8,6 +8,9 @@ import LayoutWeb from '../../../layouts/Web'
 import Card10Kasus from '../../../components/utilities/Card10Kasus'
 
 function WebRawatinapShow() {
+  // title page
+  document.title = '10 Kasus Terbesar Diagnosa - Si Asri'
+
   return (
     <React.Fragment>
       <LayoutWeb>

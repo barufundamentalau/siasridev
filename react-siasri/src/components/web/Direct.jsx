@@ -18,7 +18,7 @@ function Direct() {
   }, [])
 
   return (
-    <div className='row'>
+    <>
       {directs.map((direct) => (
         <div className='col-md-4 mb-3' key={direct.id}>
           <div
@@ -40,7 +40,7 @@ function Direct() {
           </div>
         </div>
       ))}
-    </div>
+    </>
   )
 }
 

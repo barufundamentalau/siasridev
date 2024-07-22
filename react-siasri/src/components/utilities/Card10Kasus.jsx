@@ -7,11 +7,12 @@ export default function Card10Kasus() {
         <div className='card border-0 rounded shadow-sm'>
           <div className='card-body'>
             <h5>
-              <i className='fa fa-map-marked-alt'></i> DOWNLOAD JKN MOBILE
+              <i className='fa fa-stethoscope'></i> RAWAT JALAN
             </h5>
             <hr />
             <div className='row'>
-              <div className='col-md-2 col-2'>ASDF</div>
+              <div className='col-md-6 col-6'>DESKRIPSI</div>
+              <div className='col-md-6 col-6'>TOTAL</div>
             </div>
           </div>
         </div>
@@ -20,11 +21,12 @@ export default function Card10Kasus() {
         <div className='card border-0 rounded shadow-sm'>
           <div className='card-body'>
             <h5>
-              <i className='fa fa-map-marked-alt'></i> DOWNLOAD JKN MOBILE
+              <i className='fa fa-stethoscope'></i> RAWAT DARURAT
             </h5>
             <hr />
             <div className='row'>
-              <div className='col-md-2 col-2'>ASDF</div>
+              <div className='col-md-6 col-6'>DESKRIPSI</div>
+              <div className='col-md-6 col-6'>TOTAL</div>
             </div>
           </div>
         </div>
@@ -33,11 +35,12 @@ export default function Card10Kasus() {
         <div className='card border-0 rounded shadow-sm'>
           <div className='card-body'>
             <h5>
-              <i className='fa fa-map-marked-alt'></i> DOWNLOAD JKN MOBILE
+              <i className='fa fa-stethoscope'></i> RAWAT INAP
             </h5>
             <hr />
             <div className='row'>
-              <div className='col-md-2 col-2'>ASDF</div>
+              <div className='col-md-6 col-6'>DESKRIPSI</div>
+              <div className='col-md-6 col-6'>TOTAL</div>
             </div>
           </div>
         </div>

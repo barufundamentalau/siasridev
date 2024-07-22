@@ -27,7 +27,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 function CategoriesIndex() {
   //title page
-  document.title = 'Categories - Administrator Administrator Si Asri'
+  document.title = 'KATEGORI - Administrator Administrator Si Asri'
 
   //state posts
   const [categories, setCategories] = useState([])
@@ -140,7 +140,7 @@ function CategoriesIndex() {
             <div className='card border-0 rounded shadow-sm border-top-success'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-folder'></i> CATEGORIES
+                  <i className='fa fa-map-signs'></i> KATEGORI
                 </span>
               </div>
               <div className='card-body'>

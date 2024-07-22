@@ -251,7 +251,7 @@ function PlaceEdit() {
                 <form onSubmit={updatePlace}>
                   <div className='mb-3'>
                     <label className='form-label fw-bold'>
-                      Image (<i>select many file</i>)
+                      FOTO (<i>bisa lebih dari satu foto </i>)
                     </label>
                     <input
                       type='file'
@@ -260,25 +260,46 @@ function PlaceEdit() {
                       multiple
                     />
                   </div>
-                  <div className='mb-3'>
-                    <label className='form-label fw-bold'>Title</label>
-                    <input
-                      type='text'
-                      className='form-control'
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      placeholder='Enter Title Place'
-                    />
-                  </div>
-                  {validation.title && (
-                    <div className='alert alert-danger'>
-                      {validation.title[0]}
-                    </div>
-                  )}
                   <div className='row'>
                     <div className='col-md-6'>
                       <div className='mb-3'>
-                        <label className='form-label fw-bold'>Category</label>
+                        <label className='form-label fw-bold'>NAMA</label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          placeholder='Enter Title Place'
+                        />
+                      </div>
+                      {validation.title && (
+                        <div className='alert alert-danger'>
+                          {validation.title[0]}
+                        </div>
+                      )}
+                    </div>
+                    <div className='col-md-6'>
+                      <div className='mb-3'>
+                        <label className='form-label fw-bold'>NOMOR HP</label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder='Enter Phone'
+                        />
+                      </div>
+                      {validation.phone && (
+                        <div className='alert alert-danger'>
+                          {validation.phone[0]}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-md-12'>
+                      <div className='mb-3'>
+                        <label className='form-label fw-bold'>KATEGORI</label>
                         <select
                           class='form-select'
                           value={categoryID}
@@ -298,28 +319,9 @@ function PlaceEdit() {
                         </div>
                       )}
                     </div>
-                    <div className='col-md-6'>
-                      <div className='mb-3'>
-                        <label className='form-label fw-bold'>
-                          Office Hours
-                        </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          value={office_hours}
-                          onChange={(e) => setOfficeHours(e.target.value)}
-                          placeholder='Enter Office Hours'
-                        />
-                      </div>
-                      {validation.office_hours && (
-                        <div className='alert alert-danger'>
-                          {validation.office_hours[0]}
-                        </div>
-                      )}
-                    </div>
                   </div>
                   <div className='mb-3'>
-                    <label className='form-label fw-bold'>Description</label>
+                    <label className='form-label fw-bold'>DESKRIPSI</label>
                     <ReactQuill
                       theme='snow'
                       rows='5'
@@ -332,44 +334,8 @@ function PlaceEdit() {
                       {validation.description[0]}
                     </div>
                   )}
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <div className='mb-3'>
-                        <label className='form-label fw-bold'>Phone</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder='Enter Phone'
-                        />
-                      </div>
-                      {validation.phone && (
-                        <div className='alert alert-danger'>
-                          {validation.phone[0]}
-                        </div>
-                      )}
-                    </div>
-                    <div className='col-md-6'>
-                      <div className='mb-3'>
-                        <label className='form-label fw-bold'>Website</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          value={website}
-                          onChange={(e) => setWebsite(e.target.value)}
-                          placeholder='Enter Website Place'
-                        />
-                      </div>
-                      {validation.website && (
-                        <div className='alert alert-danger'>
-                          {validation.title[0]}
-                        </div>
-                      )}
-                    </div>
-                  </div>
                   <div className='mb-3'>
-                    <label className='form-label fw-bold'>Address</label>
+                    <label className='form-label fw-bold'>ALAMAT</label>
                     <textarea
                       class='form-control'
                       rows='3'

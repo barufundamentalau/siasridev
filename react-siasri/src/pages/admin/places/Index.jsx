@@ -170,8 +170,8 @@ function PlacesIndex() {
                     <thead>
                       <tr>
                         <th scope='col'>No.</th>
-                        <th scope='col'>Title</th>
-                        <th scope='col'>Category</th>
+                        <th scope='col'>Nama</th>
+                        <th scope='col'>Kategori</th>
                         <th scope='col'>Actions</th>
                       </tr>
                     </thead>

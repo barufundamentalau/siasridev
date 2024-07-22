@@ -22,8 +22,8 @@ class CreatePlacesTable extends Migration
             $table->text('description');
             $table->string('phone');
             $table->string('website');
-            $table->string('office_hours');
-            $table->text('address');
+            $table->string('office_hours')->nullable();
+            $table->text('address')->nullable();
             $table->string('longitude');
             $table->string('latitude');
             $table->timestamps();

@@ -40,8 +40,8 @@ function PlaceCreate() {
   const [categoryID, setCategoryID] = useState('')
   const [description, setDescription] = useState('')
   const [phone, setPhone] = useState('')
-  const [website, setWebsite] = useState('')
-  const [office_hours, setOfficeHours] = useState('')
+  // const [website, setWebsite] = useState('')
+  // const [office_hours, setOfficeHours] = useState('')
   const [address, setAddress] = useState('')
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
@@ -116,8 +116,8 @@ function PlaceCreate() {
     formData.append('category_id', categoryID)
     formData.append('description', description)
     formData.append('phone', phone)
-    formData.append('website', website)
-    formData.append('office_hours', office_hours)
+    // formData.append('website', website)
+    // formData.append('office_hours', office_hours)
     formData.append('address', address)
     formData.append('latitude', latitude)
     formData.append('longitude', longitude)
@@ -235,7 +235,7 @@ function PlaceCreate() {
                 <form onSubmit={storePlace}>
                   <div className='mb-3'>
                     <label className='form-label fw-bold'>
-                      Image (<i>select many file</i>)
+                      FOTO (<i>bisa lebih dari satu foto</i>)
                     </label>
                     <input
                       type='file'
@@ -244,25 +244,46 @@ function PlaceCreate() {
                       multiple
                     />
                   </div>
-                  <div className='mb-3'>
-                    <label className='form-label fw-bold'>Title</label>
-                    <input
-                      type='text'
-                      className='form-control'
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      placeholder='Enter Title Place'
-                    />
-                  </div>
-                  {validation.title && (
-                    <div className='alert alert-danger'>
-                      {validation.title[0]}
-                    </div>
-                  )}
                   <div className='row'>
                     <div className='col-md-6'>
                       <div className='mb-3'>
-                        <label className='form-label fw-bold'>Category</label>
+                        <label className='form-label fw-bold'>NAMA</label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          value={title}
+                          onChange={(e) => setTitle(e.target.value)}
+                          placeholder='Enter Title Place'
+                        />
+                      </div>
+                      {validation.title && (
+                        <div className='alert alert-danger'>
+                          {validation.title[0]}
+                        </div>
+                      )}
+                    </div>
+                    <div className='col-md-6'>
+                      <div className='mb-3'>
+                        <label className='form-label fw-bold'>NOMOR HP</label>
+                        <input
+                          type='text'
+                          className='form-control'
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder='Enter Phone'
+                        />
+                      </div>
+                      {validation.phone && (
+                        <div className='alert alert-danger'>
+                          {validation.phone[0]}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-md-12'>
+                      <div className='mb-3'>
+                        <label className='form-label fw-bold'>KATEGORI</label>
                         <select
                           className='form-select'
                           value={categoryID}
@@ -282,28 +303,9 @@ function PlaceCreate() {
                         </div>
                       )}
                     </div>
-                    <div className='col-md-6'>
-                      <div className='mb-3'>
-                        <label className='form-label fw-bold'>
-                          Office Hours
-                        </label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          value={office_hours}
-                          onChange={(e) => setOfficeHours(e.target.value)}
-                          placeholder='Enter Office Hours'
-                        />
-                      </div>
-                      {validation.office_hours && (
-                        <div className='alert alert-danger'>
-                          {validation.office_hours[0]}
-                        </div>
-                      )}
-                    </div>
                   </div>
                   <div className='mb-3'>
-                    <label className='form-label fw-bold'>Description</label>
+                    <label className='form-label fw-bold'>DESKRIPSI</label>
                     <ReactQuill
                       theme='snow'
                       rows='5'
@@ -316,44 +318,8 @@ function PlaceCreate() {
                       {validation.description[0]}
                     </div>
                   )}
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <div className='mb-3'>
-                        <label className='form-label fw-bold'>Phone</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder='Enter Phone'
-                        />
-                      </div>
-                      {validation.phone && (
-                        <div className='alert alert-danger'>
-                          {validation.phone[0]}
-                        </div>
-                      )}
-                    </div>
-                    <div className='col-md-6'>
-                      <div className='mb-3'>
-                        <label className='form-label fw-bold'>Website</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          value={website}
-                          onChange={(e) => setWebsite(e.target.value)}
-                          placeholder='Enter Website Place'
-                        />
-                      </div>
-                      {validation.website && (
-                        <div className='alert alert-danger'>
-                          {validation.title[0]}
-                        </div>
-                      )}
-                    </div>
-                  </div>
                   <div className='mb-3'>
-                    <label className='form-label fw-bold'>Address</label>
+                    <label className='form-label fw-bold'>ALAMAT</label>
                     <textarea
                       className='form-control'
                       rows='3'
@@ -370,7 +336,7 @@ function PlaceCreate() {
                   <div className='row'>
                     <div className='col-md-6'>
                       <div className='mb-3'>
-                        <label className='form-label fw-bold'>Latitude</label>
+                        <label className='form-label fw-bold'>LATITUDE</label>
                         <input
                           type='text'
                           className='form-control'
@@ -387,7 +353,7 @@ function PlaceCreate() {
                     </div>
                     <div className='col-md-6'>
                       <div className='mb-3'>
-                        <label className='form-label fw-bold'>Longitude</label>
+                        <label className='form-label fw-bold'>LONGITUDE</label>
                         <input
                           type='text'
                           className='form-control'
