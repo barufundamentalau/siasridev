@@ -15,6 +15,9 @@ import CardPengunjung from '../../../components/utilities/CardPengunjung'
 // path import sesuai helpers ID to STRING
 import { getTitle } from '../../../helpers/simrsHelpers'
 
+//import BASE URL API SIMRS
+import Backend from '../../../api/backend'
+
 function WebPengunjungShow() {
   // title page
   document.title = 'Pengunjung - Si Asri'
@@ -29,20 +32,20 @@ function WebPengunjungShow() {
     setLoadingPengunjung(true)
 
     try {
-      // fetch data dari API publik
-      const response = await fetch(
-        'https://simrs.kotamobagu.go.id/webservice/dashboard/layanan/pengunjung'
-      )
-      const data = await response.json()
+      // fetch data dari API publik menggunakan axios instance "Simrs"
+      const response = await Backend.get('api/web/pengunjung')
 
       // log data untuk memeriksa strukturnya
-      console.log('Data yang diambil:', data)
+      console.log('Data yang diambil:', response.data.data.data)
 
       // menetapkan respons ke state "pengunjungs"
-      if (data && data.data) {
-        setPengunjungs(data.data)
+      if (response.data.data.data && response.data.data.data) {
+        setPengunjungs(response.data.data.data)
       } else {
-        console.error('Struktur data yang tidak terduga:', data)
+        console.error(
+          'Struktur data yang tidak terduga:',
+          response.data.data.data
+        )
       }
 
       // setLoadingKunjungan "false"
@@ -73,7 +76,7 @@ function WebPengunjungShow() {
               <hr />
             </div>
             <div className='col-md-12 mb-4'>
-              <div class='row mt-2'>
+              <div className='row mt-2'>
                 {loadingPengunjung ? (
                   <Loading />
                 ) : pengunjungs.length > 0 ? (

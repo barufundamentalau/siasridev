@@ -39,6 +39,7 @@ class PendaftaranController extends Controller
             $url2 = 'http://36.67.82.229:806/apps/RegOnline/api/carabayar/';
             $response2 = $client->get($url2, [
                 'headers' => [
+                    'Accept' => 'application/json',
                     'Content-Type' => 'multipart/form-data',
                 ]
             ]);
@@ -71,6 +72,7 @@ class PendaftaranController extends Controller
         $url = 'http://36.67.82.229:806/apps/RegOnline/api/carabayar/';
         $response = $client->get($url, [
             'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'multipart/form-data',
             ]
         ]);
@@ -90,10 +92,11 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        // $url = 'http://192.168.20.6/apps/RegOnline/api/kliniktujuan/';
+        // $url = 'http://36.67.82.229:806/apps/RegOnline/api/kliniktujuan/';
         $url = 'http://36.67.82.229:806/apps/RegOnline/api/kliniktujuan/';
         $response = $client->get($url, [
             'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'multipart/form-data',
             ]
         ]);
@@ -117,12 +120,54 @@ class PendaftaranController extends Controller
 
         $response = $client->get($url, [
             'headers' => [
-                'Content-Type' => 'multipart/form-data',
+                'Accept' => 'application/json',
             ]
         ]);
 
         //return with Api Resource
         return new PendaftaranResource(true, 'List Data Jadwal', json_decode($response->getBody()->getContents()));
+    }
+
+
+    /**
+     * getListPengunjung
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function getListPengunjung()
+    {
+        // Membuat instance Guzzle client
+        $client = new Client();
+
+        $url = 'http://36.67.82.229:806/webservice/dashboard/layanan/pengunjung';
+
+        $response = $client->get($url, [
+            'headers' => [
+                'Accept' => 'application/json',
+            ]
+        ]);
+
+        //return with Api Resource
+        return new PendaftaranResource(true, 'List Data Pengunjung', json_decode($response->getBody()->getContents()));
+    }
+
+
+    public function getListKunjungan()
+    {
+        // Membuat instance Guzzle client
+        $client = new Client();
+
+        $url = 'https://simrs.kotamobagu.go.id/webservice/dashboard/layanan/kunjungan';
+
+        $response = $client->get($url, [
+            'headers' => [
+                'Accept' => 'application/json',
+            ]
+        ]);
+
+        //return with Api Resource
+        return new PendaftaranResource(true, 'List Data Kunjungan', json_decode($response->getBody()->getContents()));
     }
 
     /**
@@ -136,10 +181,11 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        $url = 'http://192.168.20.6/webservice/registrasionline/bpjs/getToken';
+        $url = 'http://36.67.82.229:806/webservice/registrasionline/bpjs/getToken';
 
         $response = $client->get($url, [
             'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'multipart/form-data',
             ]
         ]);
@@ -160,10 +206,11 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        $url = 'http://192.168.20.6/webservice/registrasionline/carabayar';
+        $url = 'http://36.67.82.229:806/webservice/registrasionline/carabayar';
 
         $response = $client->get($url, [
             'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'x-token' => 'ODg4OCYxNzIxMjA5ODYwJjUxYTdhMjMzZmEyYWIyYzQ4ZDRkNjhhZWI0NmYwZmZkJjE4MDlhNWZlNjIzZGYzMWIxMzcyYTA2ZmNiYWMwMDA0',
                 'query' => [
@@ -189,10 +236,11 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        $url = 'http://192.168.20.6/webservice/registrasionline/plugins/getListRujukanKartu';
+        $url = 'http://36.67.82.229:806/webservice/registrasionline/plugins/getListRujukanKartu';
 
         $response = $client->get($url, [
             'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'x-token' => 'ODg4OCYxNzIxMjA5ODYwJjUxYTdhMjMzZmEyYWIyYzQ4ZDRkNjhhZWI0NmYwZmZkJjE4MDlhNWZlNjIzZGYzMWIxMzcyYTA2ZmNiYWMwMDA0',
                 // 'query' => [
@@ -220,10 +268,11 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        $url = 'http://192.168.20.6/webservice/registrasionline/plugins/getListSuratKontrol';
+        $url = 'http://36.67.82.229:806/webservice/registrasionline/plugins/getListSuratKontrol';
 
         $response = $client->get($url, [
             'headers' => [
+                'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
                 'x-token' => 'ODg4OCYxNzIxMjA5ODYwJjUxYTdhMjMzZmEyYWIyYzQ4ZDRkNjhhZWI0NmYwZmZkJjE4MDlhNWZlNjIzZGYzMWIxMzcyYTA2ZmNiYWMwMDA0',
                 // 'query' => [
@@ -236,5 +285,25 @@ class PendaftaranController extends Controller
 
         //return with Api Resource
         return new PendaftaranResource(true, 'List Data Kartu Rujukan', json_decode($response->getBody()->getContents()));
+    }
+
+
+    public function getDiagnosa()
+    {
+
+        // Membuat instance Guzzle client
+        $client = new Client();
+
+        $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/';
+
+        $response = $client->get($url, [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'multipart/form-data',
+            ]
+        ]);
+
+        //return with Api Resource
+        return new PendaftaranResource(true, 'List Data Diagnosa', json_decode($response->getBody()->getContents()));
     }
 }

@@ -5,8 +5,8 @@ export const getTitle = (id) => {
   switch (id) {
     case '1': {
       // Mendapatkan nama hari ini
-      const options = { weekday: 'long', timeZone: 'Asia/Makassar' } // WITA
-      return `HARI ${now.toLocaleDateString('id-ID', options)}`
+      // const options = { weekday: 'long', timeZone: 'Asia/Makassar' } // WITA
+      return `HARI INI`
     }
     case '2': {
       // Mendapatkan nama bulan ini

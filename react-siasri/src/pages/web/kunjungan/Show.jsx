@@ -15,6 +15,9 @@ import CardKunjungan from '../../../components/utilities/CardKunjungan'
 // path import sesuai helpers ID to STRING
 import { getTitle } from '../../../helpers/simrsHelpers'
 
+//import BASE URL API SIMRS
+import Backend from '../../../api/backend'
+
 function WebKunjunganShow() {
   // title page
   document.title = 'Kunjungan - Si Asri'
@@ -30,19 +33,19 @@ function WebKunjunganShow() {
 
     try {
       // fetch data dari API publik
-      const response = await fetch(
-        'https://simrs.kotamobagu.go.id/webservice/dashboard/layanan/kunjungan'
-      )
-      const data = await response.json()
+      const response = await Backend.get('api/web/kunjungan')
 
       // log data untuk memeriksa strukturnya
-      console.log('Data yang diambil:', data)
+      console.log('Data yang diambil:', response.data.data.data)
 
       // menetapkan respons ke state "kunjungans"
-      if (data && data.data) {
-        setKunjungans(data.data)
+      if (response.data.data.data && response.data.data.data) {
+        setKunjungans(response.data.data.data)
       } else {
-        console.error('Struktur data yang tidak terduga:', data)
+        console.error(
+          'Struktur data yang tidak terduga:',
+          response.data.data.data
+        )
       }
 
       // setLoadingKunjungan "false"
@@ -73,7 +76,7 @@ function WebKunjunganShow() {
               <hr />
             </div>
             <div className='col-md-12 mb-4'>
-              <div class='row mt-2'>
+              <div className='row mt-2'>
                 {loadingKunjungan ? (
                   <Loading />
                 ) : kunjungans.length > 0 ? (

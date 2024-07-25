@@ -103,6 +103,12 @@ Route::prefix('web')->group(function () {
     //route simrs getJadwalDokter
     Route::get('/jadwaldokter', [App\Http\Controllers\Api\Web\PendaftaranController::class, 'getJadwalDokter', ['as' => 'web']]);
 
+    //route simrs getPengunjung
+    Route::get('/pengunjung', [App\Http\Controllers\Api\Web\PendaftaranController::class, 'getListPengunjung', ['as' => 'web']]);
+
+    //route simrs getKunjungan
+    Route::get('/kunjungan', [App\Http\Controllers\Api\Web\PendaftaranController::class, 'getListKunjungan', ['as' => 'web']]);
+
     //route simrs getBpjsToken
     Route::get('/bpjs', [App\Http\Controllers\Api\Web\PendaftaranController::class, 'getBpjsToken', ['as' => 'web']]);
 
@@ -114,4 +120,7 @@ Route::prefix('web')->group(function () {
 
     //route simrs getListSuratKontrol
     Route::get('/suratkontrol', [App\Http\Controllers\Api\Web\PendaftaranController::class, 'getListSuratKontrol', ['as' => 'web']]);
+
+    //route simrs getDiagnosa
+    Route::get('/diagnosa', [App\Http\Controllers\Api\Web\PendaftaranController::class, 'getDiagnosa', ['as' => 'web']]);
 });

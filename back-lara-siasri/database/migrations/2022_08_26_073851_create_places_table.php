@@ -21,9 +21,7 @@ class CreatePlacesTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->text('description');
             $table->string('phone');
-            $table->string('website');
-            $table->string('office_hours')->nullable();
-            $table->text('address')->nullable();
+            $table->text('address');
             $table->string('longitude');
             $table->string('latitude');
             $table->timestamps();
