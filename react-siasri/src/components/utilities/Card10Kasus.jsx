@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Pie, Bar, Line } from 'react-chartjs-2'
-// import axios from 'axios'
 import moment from 'moment'
 import html2canvas from 'html2canvas'
 import '../../helpers/chartConfig'
-//import BASE URL API SIMRS
-import Simrs from '../../api/simrs'
+// import Backend from '../../api/backend'
 
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF'
@@ -18,6 +16,8 @@ const getRandomColor = () => {
 
 const getDateRange = (type) => {
   const today = moment().startOf('day')
+  const yesterday = moment().subtract(1, 'day').startOf('day')
+
   switch (type) {
     case '1':
       return {
@@ -34,56 +34,88 @@ const getDateRange = (type) => {
         tglAwal: today.startOf('year').format('YYYY-MM-DD'),
         tglAkhir: today.endOf('year').format('YYYY-MM-DD'),
       }
+    case 'default':
+      return {
+        tglAwal: yesterday.format('YYYY-MM-DD'),
+        tglAkhir: today.format('YYYY-MM-DD'),
+      }
     default:
       return {
-        tglAwal: today.format('YYYY-MM-DD'),
+        tglAwal: yesterday.format('YYYY-MM-DD'),
         tglAkhir: today.format('YYYY-MM-DD'),
       }
   }
 }
 
 const Card10Kasus = () => {
-  const [chartData, setChartData] = useState({})
-  const [radioValue, setRadioValue] = useState('1')
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: 'Kasus',
+        data: [],
+        backgroundColor: [],
+        borderColor: '#000000',
+        borderWidth: 1,
+      },
+    ],
+  })
+  const [radioValue, setRadioValue] = useState('default')
   const [chartType, setChartType] = useState('Pie')
   const [loading, setLoading] = useState(true)
   const chartRef = useRef(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { tglAwal, tglAkhir } = getDateRange(radioValue)
-      try {
-        const response = await Simrs.get(
-          `webservice/dashboard/kasus/diagnosa/rj?_dc=1721657333427&tglAwal=${tglAwal}&tglAkhir=${tglAkhir}&type=1&page=1&start=0&limit=25`
+  const fetchData = async () => {
+    const { tglAwal, tglAkhir } = getDateRange(radioValue)
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/web/diagnosa/?tglAwal=${tglAwal}&tglAkhir=${tglAkhir}`
+      )
+
+      // Log status dan respons
+      console.log('Response Status:', response.status)
+      const data = await response.json()
+      console.log('Response Data:', data)
+
+      // Akses array data dengan benar
+      const diagnosaData = data.data.data
+
+      // Cek jika data tidak kosong
+      if (!Array.isArray(diagnosaData)) {
+        console.error(
+          'Data tidak sesuai, data.data.data bukan array',
+          diagnosaData
         )
-        const data = response.data.data
-
-        const labels = data.map((item) => item.DESKRIPSI)
-        const values = data.map((item) => parseInt(item.VALUE))
-
-        const randomColors = labels.map(() => getRandomColor())
-
-        const chartData = {
-          labels,
-          datasets: [
-            {
-              label: 'Kasus',
-              data: values,
-              backgroundColor: randomColors,
-              borderColor: '#000000',
-              borderWidth: 1,
-            },
-          ],
-        }
-
-        setChartData(chartData)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching data', error)
-        setLoading(false)
+        return
       }
-    }
 
+      const labels = diagnosaData.map((item) => item.DESKRIPSI)
+      const values = diagnosaData.map((item) => parseInt(item.VALUE))
+
+      const randomColors = labels.map(() => getRandomColor())
+
+      const newChartData = {
+        labels,
+        datasets: [
+          {
+            label: 'Kasus',
+            data: values,
+            backgroundColor: randomColors,
+            borderColor: '#000000',
+            borderWidth: 1,
+          },
+        ],
+      }
+
+      setChartData(newChartData)
+      setLoading(false)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
     fetchData()
   }, [radioValue])
 
@@ -115,8 +147,8 @@ const Card10Kasus = () => {
       legend: {
         position: 'top',
         labels: {
-          color: '#333', // Color for legend labels
-          boxWidth: 20, // Box width for legend color boxes
+          color: '#333',
+          boxWidth: 20,
         },
       },
       tooltip: {
@@ -145,7 +177,6 @@ const Card10Kasus = () => {
     },
   }
 
-  // Hitung total nilai
   const totalValue =
     chartData.datasets?.[0]?.data.reduce((acc, value) => acc + value, 0) || 0
 
@@ -153,6 +184,18 @@ const Card10Kasus = () => {
     <div className='container'>
       <div className='text-center mb-3'>
         <div className='btn-group mb-2'>
+          <input
+            type='radio'
+            id='default'
+            name='timePeriod'
+            value='default'
+            checked={radioValue === 'default'}
+            onChange={handleRadioChange}
+            className='btn-check'
+          />
+          <label htmlFor='default' className='btn btn-success'>
+            Kemarin hingga Hari Ini
+          </label>
           <input
             type='radio'
             id='today'
@@ -198,7 +241,7 @@ const Card10Kasus = () => {
         <div className='col-md-12 mb-4'>
           <div className='card border-0 rounded shadow-sm'>
             <div className='card-body-grafik'>
-              {Object.keys(chartData).length === 0 ? (
+              {chartData.labels.length === 0 ? (
                 <p>Maaf, data tidak tersedia.</p>
               ) : (
                 <>
@@ -210,14 +253,12 @@ const Card10Kasus = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {chartData.labels &&
-                        chartData.labels.map((label, index) => (
-                          <tr key={index}>
-                            <td>{label}</td>
-                            <td>{chartData.datasets[0].data[index]}</td>
-                          </tr>
-                        ))}
-                      {/* Baris Total */}
+                      {chartData.labels.map((label, index) => (
+                        <tr key={index}>
+                          <td>{label}</td>
+                          <td>{chartData.datasets[0].data[index]}</td>
+                        </tr>
+                      ))}
                       <tr>
                         <td>
                           <strong>Total</strong>

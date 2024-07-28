@@ -288,35 +288,61 @@ class PendaftaranController extends Controller
     }
 
 
-    public function getDiagnosa()
+    public function getDiagnosa(Request $request)
     {
-
-        // Membuat instance Guzzle client
+        // Create a Guzzle client instance
         $client = new Client();
 
-        $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/rj?';
+        $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/rj';
+
+        $queryParams = $request->query();
+
+        // Retrieve query parameters from the request
         $response = $client->get($url, [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ],
-            'query' => [
-                '_dc' => '1721657333427',
-                // 'tglAwal' => $tglAwal,
-                // 'tglAkhir' => $tglAkhir,
-                // 'type' => '1',
-                // 'page' => '1',
-                // 'start' => '0',
-                // 'limit' => '25',
-            ]
-        ]);
+            'query' => $queryParams,
 
+        ]);
         //return with Api Resource
-        return new
-            PendaftaranResource(
-                true,
-                'List Data Diagnosa',
-                json_decode($response->getBody()->getContents())
-            );
+        return new PendaftaranResource(true, 'List Data Diagnosa', json_decode($response->getBody()->getContents()));
     }
+
+    // public function getDiagnosa(Request $request)
+    // {
+    //     // Create a Guzzle client instance
+    //     $client = new Client();
+
+    //     $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/rj';
+
+    //     // Retrieve query parameters from the request
+    //     $queryParams = $request->query();
+
+    //     try {
+    //         // Send a GET request with the query parameters
+    //         $response = $client->request('GET', $url, [
+    //             'headers' => [
+    //                 'Accept' => 'application/json',
+    //                 'Content-Type' => 'application/json',
+    //             ],
+    //             'query' => $queryParams // Properly place the query parameters here
+    //         ]);
+
+    //         // Return with Api Resource
+    //         return new PendaftaranResource(
+    //             true,
+    //             'List Data Diagnosa',
+    //             json_decode($response->getBody()->getContents())
+    //         );
+    //     } catch (\Exception $e) {
+    //         // Handle the exception and return an error response
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Unable to fetch data',
+    //             'error' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
 }
