@@ -12,13 +12,19 @@ export default function CardService(props) {
             <img
               src={props.image}
               className='w-100 rounded-lg p-2 mb-2 bg-light'
+              alt={props.name}
             />
           </div>
           <h5>{props.name}</h5>
           <hr />
-          <h6>
-            <i>{props.phone}</i>
-          </h6>
+          <a
+            href={`https://api.whatsapp.com/send?phone=${props.phone}&text=Halo%20kak%2C%20saya%20ingin%20chat%20dengan%20%3A%20${props.name}`}
+            className='btn btn-success'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Hubungi Sekarang
+          </a>
         </div>
       </div>
     </div>
