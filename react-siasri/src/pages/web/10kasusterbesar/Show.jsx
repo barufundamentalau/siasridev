@@ -4,13 +4,10 @@ import React from 'react'
 //import layout web
 import LayoutWeb from '../../../layouts/Web'
 
-//import component card 10 kasus terbesar diagnosa
+//import component card rawat inap
 import Card10Kasus from '../../../components/utilities/Card10Kasus'
 
 function Web10KasusShow() {
-  // title page
-  document.title = '10 Kasus Terbesar Diagnosa - Si Asri'
-
   return (
     <React.Fragment>
       <LayoutWeb>
@@ -19,7 +16,7 @@ function Web10KasusShow() {
             <div className='col-md-12'>
               <h4 className='text-center'>
                 <strong className='text-uppercase'>
-                  10 KASUS TERBESAR DIAGNOSA
+                  10 Kasus Terbesar Diagnosa
                 </strong>
               </h4>
               <hr />

@@ -192,16 +192,16 @@ html:not([dir='rtl']) .mfe-3 {
   color: #fff;
   /* background-color: #116f44;
   border-color: #116f44; */
-  background-color: #6953bd;
-  border-color: #6953bd;
+  background-color: #d0da02;
+  border-color: #d0da02;
 }
 
 .btn-success-dark:hover {
   color: #fff;
   /* background-color: #116f44;
   border-color: #116f44; */
-  background-color: #6953bd;
-  border-color: #6953bd;
+  background-color: #d0da02;
+  border-color: #d0da02;
 }
 
 .ql-editor {
@@ -384,6 +384,79 @@ html:not([dir='rtl']) .mfe-3 {
   border-radius: 50%;
   padding: 20px;
   width: 55px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Adjust height as needed */
+}
+
+/* Card body untuk grafik dengan nama kelas kustom */
+.card-body-grafik {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Container untuk grafik dengan nama kelas kustom */
+.chart-container-grafik {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Adjust height as needed */
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+/* Menambahkan jarak antara grafik dan opsi chart dengan nama kelas kustom */
+.ml-0-grafik {
+  margin-left: 0;
+}
+
+.ml-md-4-grafik {
+  margin-left: 1.5rem; /* Adjust as needed for medium screens and up */
+}
+
+.pl-0-grafik {
+  padding-left: 0;
+}
+
+.pl-md-3-grafik {
+  padding-left: 1rem; /* Adjust as needed for medium screens and up */
+}
+
+/* Mengatur border dan jarak dengan nama kelas kustom */
+.border-left-grafik {
+  border-left: 2px solid #ddd;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .card-body-grafik {
+    flex-direction: row;
+  }
+}
+
+/* Pastikan grafik tidak meluber ke luar card */
+.chart-container-grafik canvas {
+  width: 100% !important; /* Override default width if needed */
+  height: auto !important; /* Maintain aspect ratio */
+}
+
+/* H5 styling */
+.card-title-grafik {
+  margin-bottom: 1rem;
+}
+
+/* Menjaga tampilan card di perangkat mobile */
+@media (max-width: 576px) {
+  .ml-md-4-grafik {
+    margin-left: 0; /* Remove margin on small screens */
+  }
+
+  .pl-md-3-grafik {
+    padding-left: 0; /* Remove padding on small screens */
+  }
 }
 
 .footer_top {
