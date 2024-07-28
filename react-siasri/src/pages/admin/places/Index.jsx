@@ -140,7 +140,8 @@ function PlacesIndex() {
             <div className='card border-0 rounded shadow-sm border-top-success'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-map-marked-alt'></i> PLACES
+                  <i className='fa fa-map-marked-alt'></i> DAFTAR PASIEN
+                  PRIORITAS
                 </span>
               </div>
               <div className='card-body'>
@@ -150,17 +151,17 @@ function PlacesIndex() {
                       to='/admin/places/create'
                       className='btn btn-md btn-success'
                     >
-                      <i className='fa fa-plus-circle'></i> ADD NEW
+                      <i className='fa fa-plus-circle'></i> TAMBAH
                     </Link>
                     <input
                       type='text'
                       className='form-control'
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      placeholder='search by place title'
+                      placeholder='Cari nama pasien'
                     />
                     <button type='submit' className='btn btn-md btn-success'>
-                      <i className='fa fa-search'></i> SEARCH
+                      <i className='fa fa-search'></i> CARI
                     </button>
                   </div>
                 </form>
@@ -171,7 +172,9 @@ function PlacesIndex() {
                       <tr>
                         <th scope='col'>No.</th>
                         <th scope='col'>Nama</th>
-                        <th scope='col'>Kategori</th>
+                        <th scope='col'>Kecamatan</th>
+                        <th scope='col'>Alamat</th>
+                        <th scope='col'>HP</th>
                         <th scope='col'>Actions</th>
                       </tr>
                     </thead>
@@ -182,7 +185,11 @@ function PlacesIndex() {
                             {++index + (currentPage - 1) * perPage}
                           </td>
                           <td>{place.title}</td>
-                          <td>{place.category.name}</td>
+                          <td className='text-uppercase'>
+                            {place.category.name}
+                          </td>
+                          <td>{place.address}</td>
+                          <td>{place.phone}</td>
                           <td className='text-center'>
                             <Link
                               to={`/admin/places/edit/${place.id}`}

@@ -18,7 +18,7 @@ import PaginationComponent from '../../../components/utilities/Pagination'
 
 function WebSearch() {
   //title page
-  document.title = 'Search - SI ASRI - Website'
+  document.title = 'Search - Si Asri'
 
   //state places
   const [places, setPlaces] = useState([])

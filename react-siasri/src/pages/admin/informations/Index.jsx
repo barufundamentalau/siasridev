@@ -140,7 +140,7 @@ function InformationsIndex() {
             <div className='card border-0 rounded shadow-sm border-top-success'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-folder'></i> INFORMATIONS
+                  <i className='fa fa-list-ul'></i> DAFTAR INFORMASI
                 </span>
               </div>
               <div className='card-body'>
@@ -150,17 +150,17 @@ function InformationsIndex() {
                       to='/admin/informations/create'
                       className='btn btn-md btn-success'
                     >
-                      <i className='fa fa-plus-circle'></i> ADD NEW
+                      <i className='fa fa-plus-circle'></i> TAMBAH
                     </Link>
                     <input
                       type='text'
                       className='form-control'
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      placeholder='search by information name'
+                      placeholder='Cari nama informasi'
                     />
                     <button type='submit' className='btn btn-md btn-success'>
-                      <i className='fa fa-search'></i> SEARCH
+                      <i className='fa fa-search'></i> CARI
                     </button>
                   </div>
                 </form>

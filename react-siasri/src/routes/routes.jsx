@@ -129,6 +129,9 @@ import WebLaboratoriumShow from '../pages/web/laboratorium/Show.jsx'
 //import view web jadwal Show
 import WebJadwalShow from '../pages/web/jadwaldokter/Show.jsx'
 
+//import view web tentang Show
+import WebTentangShow from '../pages/web/tentang/Show.jsx'
+
 //import view web maps
 import WebMapsIndex from '../pages/web/maps/Index.jsx'
 
@@ -407,6 +410,9 @@ function RoutesIndex() {
 
       {/* route "/ambilantrian" */}
       <Route path='/ambil-antrian' element={<WebAmbilAntrianShow />} />
+
+      {/* route "/tentang" */}
+      <Route path='/tentang-si-asri' element={<WebTentangShow />} />
 
       {/* route "/search" */}
       <Route path='/search' element={<WebSearch />} />

@@ -303,7 +303,7 @@ export default function CardRegistrasi() {
                   })}
               </select>
             </div>
-            {/* <div className='mb-3 mt-2'>
+            <div className='mb-3 mt-2'>
               <label>Pasien Prioritas</label>
               <select value='' onChange='' className='form-control' required>
                 <option value=''>Pilih Prioritas</option>
@@ -314,7 +314,7 @@ export default function CardRegistrasi() {
                   Penyandang Disabilitas
                 </option>
               </select>
-            </div> */}
+            </div>
             <div className='col mb-3 mt-2'>
               <label className='mb-1'>Tanggal Kunjungan</label>
               <input

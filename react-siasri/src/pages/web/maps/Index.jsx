@@ -18,7 +18,7 @@ mapboxgl.accessToken = import.meta.env.VITE_APP_MAPBOX
 
 function WebMapsIndex() {
   //title page
-  document.title = 'Maps - SI ASRI - Website'
+  document.title = 'Maps - Si Asri'
 
   //map container
   const mapContainer = useRef(null)
@@ -87,8 +87,7 @@ function WebMapsIndex() {
                 <div className='card border-0 rounded shadow-sm'>
                   <div className='card-body'>
                     <h5>
-                      <i className='fa fa-map-marked-alt'></i> SEMUA DATA VERSI
-                      MAPS
+                      <i className='fa fa-map-marked-alt'></i> MAPS SEBARAN
                     </h5>
                     <hr />
                     <div

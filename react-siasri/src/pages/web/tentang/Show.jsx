@@ -5,9 +5,9 @@ import React from 'react'
 import LayoutWeb from '../../../layouts/Web'
 
 //import component card 10 kasus terbesar diagnosa
-import Card10Kasus from '../../../components/utilities/Card10Kasus'
+import CardTentang from '../../../components/utilities/CardTentang'
 
-function Web10KasusShow() {
+function WebTentangShow() {
   // title page
   document.title = '10 Kasus Terbesar Diagnosa - Si Asri'
 
@@ -18,14 +18,12 @@ function Web10KasusShow() {
           <div className='row'>
             <div className='col-md-12'>
               <h4 className='text-center'>
-                <strong className='text-uppercase'>
-                  10 KASUS TERBESAR DIAGNOSA
-                </strong>
+                <strong className='text-uppercase'>TENTANG SI ASRI</strong>
               </h4>
               <hr />
             </div>
             <div className='col-md-12 mb-4'>
-              <Card10Kasus />
+              <CardTentang />
             </div>
           </div>
           <div className='row'>
@@ -39,4 +37,4 @@ function Web10KasusShow() {
   )
 }
 
-export default Web10KasusShow
+export default WebTentangShow

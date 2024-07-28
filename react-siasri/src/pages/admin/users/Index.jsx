@@ -140,7 +140,7 @@ function UsersIndex() {
             <div className='card border-0 border-top-success rounded shadow-sm mb-5'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-users'></i> USERS
+                  <i className='fa fa-users'></i> DAFTAR USERS
                 </span>
               </div>
               <div className='card-body'>
@@ -150,17 +150,17 @@ function UsersIndex() {
                       to='/admin/users/create'
                       className='btn btn-md btn-success'
                     >
-                      <i className='fa fa-plus-circle'></i> ADD NEW
+                      <i className='fa fa-plus-circle'></i> TAMBAH
                     </Link>
                     <input
                       type='text'
                       className='form-control'
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
-                      placeholder='search by user name'
+                      placeholder='Cari nama users'
                     />
                     <button type='submit' className='btn btn-md btn-success'>
-                      <i className='fa fa-search'></i> SEARCH
+                      <i className='fa fa-search'></i> CARI
                     </button>
                   </div>
                 </form>
@@ -169,8 +169,8 @@ function UsersIndex() {
                     <thead>
                       <tr>
                         <th scope='col'>No.</th>
-                        <th scope='col'>Full Name</th>
-                        <th scope='col'>Email Address</th>
+                        <th scope='col'>Nama</th>
+                        <th scope='col'>Email</th>
                         <th scope='col'>Actions</th>
                       </tr>
                     </thead>

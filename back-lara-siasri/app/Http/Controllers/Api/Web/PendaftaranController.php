@@ -294,7 +294,7 @@ class PendaftaranController extends Controller
         // Membuat instance Guzzle client
         $client = new Client();
 
-        $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/';
+        $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/rj?';
 
         $response = $client->get($url, [
             'headers' => [

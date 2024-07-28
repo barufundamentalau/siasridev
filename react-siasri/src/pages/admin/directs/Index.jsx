@@ -27,7 +27,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 function DirectsIndex() {
   //title page
-  document.title = 'Directs - Administrator Si Asri'
+  document.title = 'Direct Links - Administrator Si Asri'
 
   //state posts
   const [directs, setDirects] = useState([])
@@ -126,7 +126,7 @@ function DirectsIndex() {
             <div className='card border-0 border-top-success rounded shadow-sm mb-5'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-images'></i> DIRECTS
+                  <i className='fa fa-link'></i> DIRECT LINKS
                 </span>
               </div>
               <div className='card-body'>
@@ -135,7 +135,7 @@ function DirectsIndex() {
                     to='/admin/directs/create'
                     className='btn btn-md btn-success'
                   >
-                    <i className='fa fa-plus-circle'></i> ADD NEW
+                    <i className='fa fa-plus-circle'></i> TAMBAH
                   </Link>
                 </div>
                 <div className='table-responsive'>

@@ -94,7 +94,7 @@ class InformationController extends Controller
     public function update(Request $request, Information $information)
     {
         $validator = Validator::make($request->all(), [
-            'name'     => 'required|unique:informations,name,' . $information->id,
+            'name'     => 'required|unique:information,name,' . $information->id,
         ]);
 
         if ($validator->fails()) {

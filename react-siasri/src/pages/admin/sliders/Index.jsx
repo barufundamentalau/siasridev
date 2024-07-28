@@ -135,7 +135,7 @@ function SlidersIndex() {
                     to='/admin/sliders/create'
                     className='btn btn-md btn-success'
                   >
-                    <i className='fa fa-plus-circle'></i> ADD NEW
+                    <i className='fa fa-plus-circle'></i> TAMBAH
                   </Link>
                 </div>
                 <div className='table-responsive'>

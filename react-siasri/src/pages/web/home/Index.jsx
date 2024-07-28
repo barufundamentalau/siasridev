@@ -11,7 +11,7 @@ import Slider from '../../../components/web/Slider'
 import Direct from '../../../components/web/Direct'
 
 //import BASE URL API
-import Api from '../../../api'
+// import Api from '../../../api'
 
 //import cart category component
 // import CardCategory from '../../../components/utilities/CardCategory'
@@ -20,41 +20,17 @@ import Api from '../../../api'
 // import CardDirect from '../../../components/utilities/CardDirect'
 
 //import react router dom
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 function Home() {
   //title page
-  document.title = 'SI ASRI - Website '
+  document.title = 'Si Asri RSUD Kotamobagu'
 
   //navigate
-  const navigate = useNavigate()
-
-  //state categories
-  // const [categories, setCategories] = useState([])
+  // const navigate = useNavigate()
 
   //state keyword
   const [keyword, setKeyword] = useState('')
-
-  //function "fetchDataCategories"
-  const fetchDataCategories = async () => {
-    //fetching Rest API
-    await Api.get('/api/web/categories').then((response) => {
-      //set data to state
-      setCategories(response.data.data)
-    })
-  }
-
-  //hook
-  useEffect(() => {
-    //call function "fetchDataCategories"
-    fetchDataCategories()
-  }, [])
-
-  //function "searchHandler"
-  const searchHandler = () => {
-    //redirect with params "keyword"
-    navigate(`/search?q=${keyword}`)
-  }
 
   return (
     <React.Fragment>

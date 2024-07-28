@@ -7,7 +7,7 @@ import Loading from '../../../components/utilities/Loading' // Import Loading co
 
 function WebPlacesIndex() {
   // State definitions
-  document.title = 'Places - SI ASRI - Website'
+  document.title = 'Tempat - Si Asri'
   const [places, setPlaces] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [perPage, setPerPage] = useState(0)

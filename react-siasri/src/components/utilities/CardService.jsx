@@ -8,7 +8,7 @@ export default function CardService(props) {
         key={props.key}
       >
         <div className='card-body mt-2'>
-          <div className='text-center mb-3'>
+          <div className='mb-3'>
             <img
               src={props.image}
               className='w-100 rounded-lg p-2 mb-2 bg-light'

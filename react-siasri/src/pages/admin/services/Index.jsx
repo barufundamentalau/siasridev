@@ -27,7 +27,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
 function ServicesIndex() {
   //title page
-  document.title = 'Services - Administrator Si Asri'
+  document.title = 'Layanan - Administrator Si Asri'
 
   //state posts
   const [services, setServices] = useState([])
@@ -126,7 +126,7 @@ function ServicesIndex() {
             <div className='card border-0 border-top-success rounded shadow-sm mb-5'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-images'></i> SERVICES
+                  <i className='fa fa-podcast'></i> DAFTAR LAYANAN
                 </span>
               </div>
               <div className='card-body'>
@@ -135,7 +135,7 @@ function ServicesIndex() {
                     to='/admin/services/create'
                     className='btn btn-md btn-success'
                   >
-                    <i className='fa fa-plus-circle'></i> ADD NEW
+                    <i className='fa fa-plus-circle'></i> TAMBAH
                   </Link>
                 </div>
                 <div className='table-responsive'>

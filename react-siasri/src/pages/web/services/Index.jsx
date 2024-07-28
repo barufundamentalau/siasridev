@@ -57,21 +57,23 @@ export default function WebServicesIndex() {
               </h4>
               <hr />
             </div>
-            <div className='mt-2'>
-              {loadingService ? (
-                <Loading />
-              ) : services.length > 0 ? (
-                services.map((service) => (
-                  <CardService
-                    key={service.id}
-                    name={service.name}
-                    image={service.image}
-                    phone={service.phone}
-                  />
-                ))
-              ) : (
-                <AlertDataEmpty />
-              )}
+            <div className='col-md-12 mb-4'>
+              <div className='row mt-2'>
+                {loadingService ? (
+                  <Loading />
+                ) : services.length > 0 ? (
+                  services.map((service) => (
+                    <CardService
+                      key={service.id}
+                      name={service.name}
+                      image={service.image}
+                      phone={service.phone}
+                    />
+                  ))
+                ) : (
+                  <AlertDataEmpty />
+                )}
+              </div>
             </div>
           </div>
         </div>
