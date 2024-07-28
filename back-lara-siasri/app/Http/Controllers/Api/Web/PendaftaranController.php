@@ -295,15 +295,28 @@ class PendaftaranController extends Controller
         $client = new Client();
 
         $url = 'http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/rj?';
-
         $response = $client->get($url, [
             'headers' => [
                 'Accept' => 'application/json',
-                'Content-Type' => 'multipart/form-data',
+                'Content-Type' => 'application/json',
+            ],
+            'query' => [
+                '_dc' => '1721657333427',
+                // 'tglAwal' => $tglAwal,
+                // 'tglAkhir' => $tglAkhir,
+                // 'type' => '1',
+                // 'page' => '1',
+                // 'start' => '0',
+                // 'limit' => '25',
             ]
         ]);
 
         //return with Api Resource
-        return new PendaftaranResource(true, 'List Data Diagnosa', json_decode($response->getBody()->getContents()));
+        return new
+            PendaftaranResource(
+                true,
+                'List Data Diagnosa',
+                json_decode($response->getBody()->getContents())
+            );
     }
 }

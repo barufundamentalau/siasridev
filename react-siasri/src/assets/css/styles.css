@@ -159,32 +159,32 @@ html:not([dir='rtl']) .mfe-3 {
   color: #fff;
   /* background-color: #116f44;
   border-color: #116f44; */
-  background-color: #16b3ac;
-  border-color: #16b3ac;
+  background-color: #119891;
+  border-color: #d2dc02;
 }
 
 .btn-success:active {
   color: #fff;
   /* background-color: #116f44;
   border-color: #116f44; */
-  background-color: #16b3ac !important;
-  border-color: #16b3ac !important;
+  background-color: #119891 !important;
+  border-color: #d2dc02 !important;
 }
 
 .btn-success:disabled {
   color: #fff;
   /* background-color: #116f44;
   border-color: #116f44; */
-  background-color: #16b3ac !important;
-  border-color: #16b3ac !important;
+  background-color: #119891 !important;
+  border-color: #d2dc02 !important;
 }
 
 .btn-success:focus {
   color: #fff;
   /* background-color: #116f44;
   border-color: #116f44; */
-  background-color: #16b3ac !important;
-  border-color: #16b3ac !important;
+  background-color: #119891 !important;
+  border-color: #d2dc02 !important;
   box-shadow: none !important;
 }
 

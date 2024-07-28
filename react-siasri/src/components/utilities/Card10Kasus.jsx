@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Pie, Bar, Line } from 'react-chartjs-2'
-import axios from 'axios'
+// import axios from 'axios'
 import moment from 'moment'
 import html2canvas from 'html2canvas'
 import '../../helpers/chartConfig'
+//import BASE URL API SIMRS
+import Simrs from '../../api/simrs'
 
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF'
@@ -51,8 +53,8 @@ const Card10Kasus = () => {
     const fetchData = async () => {
       const { tglAwal, tglAkhir } = getDateRange(radioValue)
       try {
-        const response = await axios.get(
-          `http://36.67.82.229:806/webservice/dashboard/kasus/diagnosa/rj?_dc=1721657333427&tglAwal=${tglAwal}&tglAkhir=${tglAkhir}&type=1&page=1&start=0&limit=25`
+        const response = await Simrs.get(
+          `webservice/dashboard/kasus/diagnosa/rj?_dc=1721657333427&tglAwal=${tglAwal}&tglAkhir=${tglAkhir}&type=1&page=1&start=0&limit=25`
         )
         const data = response.data.data
 
@@ -259,7 +261,7 @@ const Card10Kasus = () => {
                 </select>
                 <button
                   onClick={downloadChart}
-                  className='btn btn-success btn-sm mt-3'
+                  className='btn btn-success mt-3'
                 >
                   Download Chart
                 </button>
