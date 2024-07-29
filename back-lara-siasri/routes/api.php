@@ -44,6 +44,9 @@ Route::prefix('admin')->group(function () {
         //informations resource
         Route::apiResource('/informations', App\Http\Controllers\Api\Admin\InformationController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
 
+        //abouts resource
+        Route::apiResource('/abouts', App\Http\Controllers\Api\Admin\AboutController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
+
         //users resource
         Route::apiResource('/users', App\Http\Controllers\Api\Admin\UserController::class, ['except' => ['create', 'edit'], 'as' => 'admin']);
     });

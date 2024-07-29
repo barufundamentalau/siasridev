@@ -194,13 +194,20 @@ function WebHeader() {
               >
                 <i className='fa fa-mobile'></i> JKN MOBILE
               </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to='/tentang-si-asri'
+                className='fw-bold text-white'
+              >
+                <i className='fa fa-info'></i> TENTANG
+              </Nav.Link>
             </Nav>
             <Nav>
               <Nav.Link
                 onClick={() => setModal(true)}
                 className='fw-bold text-white me-4'
               >
-                <i className='fa fa-search'></i> PENCARIAN
+                <i className='fa fa-search'></i> CARI
               </Nav.Link>
               {token ? (
                 <Link

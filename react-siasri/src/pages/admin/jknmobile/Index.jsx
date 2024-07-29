@@ -35,6 +35,9 @@ function JknmobileIndex() {
   //state currentPage
   const [currentPage, setCurrentPage] = useState(1)
 
+  //state search
+  const [search, setSearch] = useState('')
+
   //state perPage
   const [perPage, setPerPage] = useState(0)
 
@@ -45,12 +48,15 @@ function JknmobileIndex() {
   const token = Cookies.get('token')
 
   //function "fetchData"
-  const fetchData = async (pageNumber) => {
+  const fetchData = async (pageNumber, searchData) => {
     //define variable "page"
     const page = pageNumber ? pageNumber : currentPage
 
+    //define variable "searchQuery"
+    const searchQuery = searchData ? searchData : search
+
     //fetching data from Rest API
-    await Api.get(`/api/admin/jkns?page=${page}`, {
+    await Api.get(`/api/admin/jkns?q=${searchQuery}&page=${page}`, {
       headers: {
         //header Bearer + Token
         Authorization: `Bearer ${token}`,
@@ -77,6 +83,14 @@ function JknmobileIndex() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  //function "searchHandler"
+  const searchHandlder = (e) => {
+    e.preventDefault()
+
+    //call function "fetchDataPost" with params
+    fetchData(1, search)
+  }
 
   //function "deleteJkn"
   const deleteJkn = (id) => {
@@ -130,14 +144,26 @@ function JknmobileIndex() {
                 </span>
               </div>
               <div className='card-body'>
-                <div className='input-group mb-3'>
-                  <Link
-                    to='/admin/jknmobile/create'
-                    className='btn btn-md btn-success'
-                  >
-                    <i className='fa fa-plus-circle'></i> TAMBAH
-                  </Link>
-                </div>
+                <form onSubmit={searchHandlder} className='form-group'>
+                  <div className='input-group mb-3'>
+                    <Link
+                      to='/admin/jknmobile/create'
+                      className='btn btn-md btn-success'
+                    >
+                      <i className='fa fa-plus-circle'></i> TAMBAH
+                    </Link>
+                    <input
+                      type='text'
+                      className='form-control'
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      placeholder='Cari nama jkn'
+                    />
+                    <button type='submit' className='btn btn-md btn-success'>
+                      <i className='fa fa-search'></i> CARI
+                    </button>
+                  </div>
+                </form>
                 <div className='table-responsive'>
                   <table className='table table-bordered table-striped table-hovered'>
                     <thead>
@@ -164,6 +190,12 @@ function JknmobileIndex() {
                             />
                           </td>
                           <td className='text-center'>
+                            <Link
+                              to={`/admin/jknmobile/edit/${jkn.id}`}
+                              className='btn btn-sm btn-primary me-2'
+                            >
+                              <i className='fa fa-pencil-alt'></i>
+                            </Link>
                             <button
                               onClick={() => deleteJkn(jkn.id)}
                               className='btn btn-sm btn-danger'

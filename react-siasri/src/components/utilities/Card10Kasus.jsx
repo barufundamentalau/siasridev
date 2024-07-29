@@ -3,6 +3,7 @@ import { Pie, Bar, Line } from 'react-chartjs-2'
 import moment from 'moment'
 import html2canvas from 'html2canvas'
 import '../../helpers/chartConfig'
+import Loading from '../../components/utilities/Loading'
 // import Backend from '../../api/backend'
 
 const getRandomColor = () => {
@@ -138,7 +139,12 @@ const Card10Kasus = () => {
     }
   }
 
-  if (loading) return <p>Loading...</p>
+  if (loading)
+    return (
+      <>
+        <Loading />
+      </>
+    )
 
   const chartOptions = {
     responsive: true,

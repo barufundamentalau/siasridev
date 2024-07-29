@@ -56,6 +56,9 @@ import JknmobileIndex from '../pages/admin/jknmobile/Index.jsx'
 //import view admin jkn mobile Create
 import JknmobileCreate from '../pages/admin/jknmobile/Create.jsx'
 
+//import view admin jkn mobile Create
+import JknmobileEdit from '../pages/admin/jknmobile/Edit.jsx'
+
 //import view admin informations Index
 import InformationsIndex from '../pages/admin/informations/Index.jsx'
 
@@ -290,6 +293,16 @@ function RoutesIndex() {
         element={
           <PrivateRoute>
             <JknmobileCreate />
+          </PrivateRoute>
+        }
+      />
+
+      {/* private route "/admin/jknmobile/edit/:id" */}
+      <Route
+        path='/admin/jknmobile/edit/:id'
+        element={
+          <PrivateRoute>
+            <JknmobileEdit />
           </PrivateRoute>
         }
       />

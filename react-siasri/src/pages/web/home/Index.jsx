@@ -22,6 +22,8 @@ import Direct from '../../../components/web/Direct'
 //import react router dom
 // import { useNavigate } from 'react-router-dom'
 
+import LoadingHome from '../../../components/utilities/LoadingHome'
+
 function Home() {
   //title page
   document.title = 'Si Asri RSUD Kotamobagu'
@@ -31,6 +33,30 @@ function Home() {
 
   //state keyword
   const [keyword, setKeyword] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  // Example of an asynchronous operation
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Simulate a fetch operation
+        setLoading(true)
+        // Simulate network delay
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        setLoading(false)
+      } catch (error) {
+        console.error('Error fetching data', error)
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Loading state
+  if (loading) {
+    return <LoadingHome />
+  }
 
   return (
     <React.Fragment>
@@ -61,17 +87,6 @@ function Home() {
           <div className='row justify-content-center mt-4'>
             <Direct />
           </div>
-          {/* <div className='row justify-content-center mt-4'>
-            {categories.map((category) => (
-              <CardCategory
-                key={category.id}
-                id={category.id}
-                name={category.name}
-                slug={category.slug}
-                image={category.image}
-              />
-            ))}
-          </div> */}
         </div>
       </LayoutWeb>
     </React.Fragment>
