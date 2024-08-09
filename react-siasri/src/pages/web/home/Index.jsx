@@ -63,7 +63,7 @@ function Home() {
       <LayoutWeb>
         <Slider />
         <div className='container mb-5'>
-          <div className='row mt-minus-87'>
+          {/* <div className='row mt-minus-87'>
             <div className='col-md-12'>
               <div className='card border-0 rounded shadow-sm'>
                 <div className='card-body'>
@@ -83,7 +83,7 @@ function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className='row justify-content-center mt-4'>
             <Direct />
           </div>

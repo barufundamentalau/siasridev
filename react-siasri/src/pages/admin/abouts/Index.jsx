@@ -1,7 +1,7 @@
 //import react
 import React, { useState, useEffect } from 'react'
 
-//import layout
+//import layout admin
 import LayoutAdmin from '../../../layouts/Admin'
 
 //import BASE URL API
@@ -25,12 +25,12 @@ import { confirmAlert } from 'react-confirm-alert'
 //import CSS react-confirm-alert
 import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
 
-function SlidersIndex() {
+function AboutsIndex() {
   //title page
-  document.title = 'Sliders - Administrator Si ASRI'
+  document.title = 'TENTANG - Administrator Administrator Si Asri'
 
   //state posts
-  const [sliders, setSliders] = useState([])
+  const [abouts, setAbouts] = useState([])
 
   //state currentPage
   const [currentPage, setCurrentPage] = useState(1)
@@ -41,23 +41,29 @@ function SlidersIndex() {
   //state total
   const [total, setTotal] = useState(0)
 
+  //state search
+  const [search, setSearch] = useState('')
+
   //token
   const token = Cookies.get('token')
 
   //function "fetchData"
-  const fetchData = async (pageNumber) => {
+  const fetchData = async (pageNumber, searchData) => {
     //define variable "page"
     const page = pageNumber ? pageNumber : currentPage
 
+    //define variable "searchQuery"
+    const searchQuery = searchData ? searchData : search
+
     //fetching data from Rest API
-    await Api.get(`/api/admin/sliders?page=${page}`, {
+    await Api.get(`/api/admin/abouts?q=${searchQuery}&page=${page}`, {
       headers: {
         //header Bearer + Token
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      //set data response to state "sliders"
-      setSliders(response.data.data.data)
+      //set data response to state "abouts"
+      setAbouts(response.data.data.data)
 
       //set currentPage
       setCurrentPage(response.data.data.current_page)
@@ -78,8 +84,16 @@ function SlidersIndex() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  //function "deleteSlider"
-  const deleteSlider = (id) => {
+  //function "searchHandler"
+  const searchHandlder = (e) => {
+    e.preventDefault()
+
+    //call function "fetchDataPost" with params
+    fetchData(1, search)
+  }
+
+  //function "deleteAbout"
+  const deleteAbout = (id) => {
     //show confirm alert
     confirmAlert({
       title: 'Are You Sure ?',
@@ -88,7 +102,7 @@ function SlidersIndex() {
         {
           label: 'YES',
           onClick: async () => {
-            await Api.delete(`/api/admin/sliders/${id}`, {
+            await Api.delete(`/api/admin/abouts/${id}`, {
               headers: {
                 //header Bearer + Token
                 Authorization: `Bearer ${token}`,
@@ -122,48 +136,63 @@ function SlidersIndex() {
     <React.Fragment>
       <LayoutAdmin>
         <div className='row mt-4'>
-          <div className='col-md-12'>
-            <div className='card border-0 border-top-success rounded shadow-sm mb-5'>
+          <div className='col-12'>
+            <div className='card border-0 rounded shadow-sm border-top-success'>
               <div className='card-header'>
                 <span className='font-weight-bold'>
-                  <i className='fa fa-images'></i> SLIDERS
+                  <i className='fa fa-question'></i> TENTANG
                 </span>
               </div>
               <div className='card-body'>
-                <div className='input-group mb-3'>
-                  <Link
-                    to='/admin/sliders/create'
-                    className='btn btn-md btn-success'
-                  >
-                    <i className='fa fa-plus-circle'></i> TAMBAH
-                  </Link>
-                </div>
+                <form onSubmit={searchHandlder} className='form-group'>
+                  <div className='input-group mb-3'>
+                    <Link
+                      to='/admin/abouts/create'
+                      className='btn btn-md btn-success'
+                    >
+                      <i className='fa fa-plus-circle'></i> TAMBAH
+                    </Link>
+                    <input
+                      type='text'
+                      className='form-control'
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      placeholder='Cari nama tentang'
+                    />
+                    <button type='submit' className='btn btn-md btn-success'>
+                      <i className='fa fa-search'></i> CARI
+                    </button>
+                  </div>
+                </form>
                 <div className='table-responsive'>
                   <table className='table table-bordered table-striped table-hovered'>
                     <thead>
                       <tr>
                         <th scope='col'>No.</th>
-                        <th scope='col'>Image</th>
+                        <th scope='col'>Foto</th>
+                        <th scope='col'>title</th>
                         <th scope='col'>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {sliders.map((slider, index) => (
+                      {abouts.map((about, index) => (
                         <tr key={index}>
                           <td className='text-center'>
                             {++index + (currentPage - 1) * perPage}
                           </td>
                           <td className='text-center'>
-                            <img
-                              src={slider.image}
-                              alt=''
-                              width='200'
-                              className='rounded'
-                            />
+                            <img src={about.image} alt='' width='50' />
                           </td>
+                          <td>{about.title}</td>
                           <td className='text-center'>
+                            <Link
+                              to={`/admin/abouts/edit/${about.id}`}
+                              className='btn btn-sm btn-primary me-2'
+                            >
+                              <i className='fa fa-pencil-alt'></i>
+                            </Link>
                             <button
-                              onClick={() => deleteSlider(slider.id)}
+                              onClick={() => deleteAbout(about.id)}
                               className='btn btn-sm btn-danger'
                             >
                               <i className='fa fa-trash'></i>
@@ -190,4 +219,4 @@ function SlidersIndex() {
   )
 }
 
-export default SlidersIndex
+export default AboutsIndex

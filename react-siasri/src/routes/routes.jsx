@@ -50,6 +50,15 @@ import ServicesIndex from '../pages/admin/services/Index.jsx'
 //import view admin service Create
 import ServiceCreate from '../pages/admin/services/Create.jsx'
 
+//import view admin abouts Index
+import AboutsIndex from '../pages/admin/abouts/Index.jsx'
+
+//import view admin about Create
+import AboutCreate from '../pages/admin/abouts/Create.jsx'
+
+//import view admin about Edit
+import AboutEdit from '../pages/admin/abouts/Edit.jsx'
+
 //import view admin jkn mobile Index
 import JknmobileIndex from '../pages/admin/jknmobile/Index.jsx'
 
@@ -138,6 +147,12 @@ import WebTentangShow from '../pages/web/tentang/Show.jsx'
 //import view web maps
 import WebMapsIndex from '../pages/web/maps/Index.jsx'
 
+//import view web info tarif Show
+import WebInfoTarifShow from '../pages/web/infotarif/Show.jsx'
+
+//import view tempat tidur
+import WebTempatTidurShow from '../pages/web/jumlahtempattidur/Show.jsx'
+
 //import view web search
 import WebSearch from '../pages/web/search/Index.jsx'
 
@@ -183,6 +198,36 @@ function RoutesIndex() {
         element={
           <PrivateRoute>
             <CategoryEdit />
+          </PrivateRoute>
+        }
+      />
+
+      {/* private route "/admin/abouts" */}
+      <Route
+        path='/admin/abouts'
+        element={
+          <PrivateRoute>
+            <AboutsIndex />
+          </PrivateRoute>
+        }
+      />
+
+      {/* private route "/admin/abouts/create" */}
+      <Route
+        path='/admin/abouts/create'
+        element={
+          <PrivateRoute>
+            <AboutCreate />
+          </PrivateRoute>
+        }
+      />
+
+      {/* private route "/admin/abouts/edit/:id" */}
+      <Route
+        path='/admin/abouts/edit/:id'
+        element={
+          <PrivateRoute>
+            <AboutEdit />
           </PrivateRoute>
         }
       />
@@ -426,6 +471,12 @@ function RoutesIndex() {
 
       {/* route "/tentang" */}
       <Route path='/tentang-si-asri' element={<WebTentangShow />} />
+
+      {/* route "/info tarif" */}
+      <Route path='/info-tarif' element={<WebInfoTarifShow />} />
+
+      {/* route "/jumlah tempat tidur" */}
+      <Route path='/jumlah-tempat-tidur' element={<WebTempatTidurShow />} />
 
       {/* route "/search" */}
       <Route path='/search' element={<WebSearch />} />

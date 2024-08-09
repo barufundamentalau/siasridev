@@ -13,7 +13,7 @@ import Simrs from '../../api/simrs'
 import toast from 'react-hot-toast'
 
 //import toast
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 export default function CardRegistrasi() {
   // form identitas pasien
@@ -24,75 +24,29 @@ export default function CardRegistrasi() {
   // init state
   const [okliniks, setoKliniks] = useState([])
   const [klinik, setKlinik] = useState('')
-  const [loadingKlinik, setLoadingKlinik] = useState(false)
   const [nomorKartu, setNomorKartu] = useState('')
   const [nomorRujukan, setNomorRujukan] = useState('')
   const [jadwals, setJadwals] = useState([])
   const [openjamin, setoPenjamin] = useState('')
-  const [jadwalDokter, setJadwalDokter] = useState('')
   const [tanggalKunjungan, setTanggalKunjungan] = useState('')
-  const [dataRujukanDitemukan, setDataRujukanDitemukan] = useState(false)
+  const [pasienPrioritas, setPasienPrioritas] = useState('')
+  const [dokter, setDokter] = useState('')
+  const [dataRegistrasi, setDataRegistrasi] = useState(false)
+  const [loket, setLoket] = useState('')
+  const [ruangan, setRuangan] = useState('')
+  const [sdisabled, setsdisabled] = useState(true)
 
   // fetch data kliniks
   const fetchDataKlinikTujuans = async () => {
-    // setLoadingJadwal "true"
-    setLoadingKlinik(true)
     //fetch data
     await Api.get('/api/web/kliniktujuan').then((response) => {
       //assign response to state "Kliniks"
       setoKliniks(response.data.data.data)
-
-      //setLoadingService "false"
-      setLoadingKlinik(false)
     })
   }
 
-  // fetch data rujukan
-  // const fetchDataRujukans = async (a) => {
-  //   // fetchDataRujukan "true"
-  //   // setLoadingRujukan(true)
-  //   //fetch data
-  //   await Simrs.get(
-  //     'webservice/registrasionline/plugins/getListRujukanKartu?noKartu=' +
-  //       nomorKartu +
-  //       '&faskes=' +
-  //       a
-  //   ).then((response) => {
-  //     console.log(response)
-  //     if (response.data.success) {
-  //       setNomorRujukan(response.data.data.rujukan[0].noKunjungan)
-  //       setKlinik(response.data.data.rujukan[0].poliRujukan.kode)
-  //       toast.success('Data rujukan berhasil ditemukan!', {
-  //         duration: 4000,
-  //         position: 'top-right',
-  //         style: {
-  //           borderRadius: '10px',
-  //           background: '#333',
-  //           color: '#fff',
-  //         },
-  //       })
-  //     } else {
-  //       toast.error('Data rujukan tidak ditemukan.', {
-  //         duration: 4000,
-  //         position: 'top-right',
-  //         style: {
-  //           borderRadius: '10px',
-  //           background: '#333',
-  //           color: '#fff',
-  //         },
-  //       })
-  //     }
-
-  //     //assign response to state "Rujukans"
-  //     // setoRujukans(response.data.data.data)
-
-  //     //setLoadingService "false"
-  //     // setLoadingRujukan(false)
-  //   })
-  // }
   // Fetch data rujukan
   const fetchDataRujukans = async (a) => {
-    setDataRujukanDitemukan(false) // Reset status rujukan saat pencarian
     await Simrs.get(
       'webservice/registrasionline/plugins/getListRujukanKartu?noKartu=' +
         nomorKartu +
@@ -102,7 +56,8 @@ export default function CardRegistrasi() {
       if (response.data.success && response.data.data.rujukan.length > 0) {
         setNomorRujukan(response.data.data.rujukan[0].noKunjungan)
         setKlinik(response.data.data.rujukan[0].poliRujukan.kode)
-        setDataRujukanDitemukan(true) // Data rujukan ditemukan
+        fetchDataLoket(response.data.data.rujukan[0].poliRujukan.kode)
+        fetchDataJadwals(response.data.data.rujukan[0].poliRujukan.kode)
         toast.success('Data rujukan berhasil ditemukan!', {
           duration: 4000,
           position: 'top-right',
@@ -126,12 +81,52 @@ export default function CardRegistrasi() {
       }
     })
   }
+  const fetchDataLoket = async (a) => {
+    // Reset status rujukan saat pencarian
+    await Simrs.get(
+      'webservice/registrasionline/ruangan?_dc=123&STATUS=1&RUANGAN_PENJAMIN=' +
+        a
+    )
+      .then((response) => {
+        if (response.data.success && response.data.data.length > 0) {
+          setLoket(response.data.data[0].ANTRIAN)
+          setRuangan(response.data.data[0].ID)
+          toast.success(
+            'Anda akan mengantri di Loket ' + response.data.data[0].ANTRIAN,
+            {
+              duration: 4000,
+              position: 'top-right',
+              style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+              },
+            }
+          )
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error('ADA KESALAHAN!', {
+          duration: 4000,
+          position: 'top-right',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+      })
+  }
 
   // fetch data jadwals
-  const fetchDataJadwals = async () => {
+  const fetchDataJadwals = async (a) => {
     try {
       const response = await Simrs.get(
-        `/apps/RegOnline//api/jadwaldokter/?TANGGAL=${tanggalKunjungan}&POLI=${klinik}`
+        'webservice/registrasionline/jadwaldokterhfis?_dc=1722146099995&STATUS=1&POLI=' +
+          a +
+          '&TANGGAL=' +
+          tanggalKunjungan
       )
       if (response.data.success) {
         toast.success('Data jadwal dokter berhasil ditemukan!', {
@@ -145,6 +140,7 @@ export default function CardRegistrasi() {
         })
         setJadwals(response.data.data)
       } else {
+        setJadwals([])
         toast.error('Data jadwal dokter tidak ditemukan.', {
           duration: 4000,
           position: 'top-right',
@@ -167,34 +163,281 @@ export default function CardRegistrasi() {
       })
     }
   }
+  // Submit Jadwal
+  const submitAntrian = async () => {
+    try {
+      const post = {
+        TANGGALKUNJUNGAN: tanggalKunjungan,
+        NORM: dataPasien.NORM,
+        NAMA: dataPasien.NAMA,
+        TEMPAT_LAHIR: dataPasien.TEMPAT_LAHIR,
+        TANGGAL_LAHIR: dataPasien.TANGGAL_LAHIR,
+        ALAMAT: dataPasien.ALAMAT,
+        PEKERJAAN: dataPasien.PEKERJAAN,
+        INSTANSI_ASAL: '',
+        JK: '1',
+        WILAYAH: dataPasien.WILAYAH,
+        POLI: ruangan,
+        DOKTER: JSON.parse(dokter).KD_DOKTER,
+        CARABAYAR: openjamin,
+        CONTACT: dataPasien.KONTAK[0]?.NOMOR,
+        NO: 0,
+        JAM: '',
+        POS_ANTRIAN: loket,
+        NO_REF_BPJS: nomorRujukan,
+        POLI_BPJS: klinik,
+        REF_POLI_RUJUKAN: klinik,
+        JENIS: 1,
+        STATUS: 1,
+        JENIS_APLIKASI: 22,
+        NIK: dataPasien.KARTUIDENTITAS[0]?.NOMOR,
+        NO_KARTU_BPJS: dataPasien.NO_KARTU_BPJS,
+        JAM_PRAKTEK: JSON.parse(dokter).JAM,
+        JENIS_KUNJUNGAN: 1,
+      }
+      const response = await Simrs.post(
+        'webservice/registrasionline/reservasi?_dc=1722095921608',
+        post
+      )
+      if (response.data.success) {
+        localStorage.setItem('registrasi', JSON.stringify(response.data))
+        toast.success('Registrasi Berhasil!', {
+          duration: 4000,
+          position: 'top-right',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+      } else {
+        toast.error('Ambil Antrian Gagal.', {
+          duration: 4000,
+          position: 'top-right',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+      }
+    } catch (error) {
+      toast.error('Terjadi kesalahan saat mengambil antrian.', {
+        duration: 4000,
+        position: 'top-right',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      })
+    }
+  }
 
   useEffect(() => {
     // panggil metode "fetchDataKlinikTujuans"
-    fetchDataKlinikTujuans()
-  }, [])
-
-  useEffect(() => {
-    if (klinik !== '') {
-      fetchDataJadwals()
+    if (nomorRujukan !== '') {
+      fetchDataKlinikTujuans()
     }
-  }, [klinik])
-  // useEffect(() => {
-  //   if (nomorKartu > 12) {
-  //     fetchDataRujukans()
-  //   }
-  // }, [nomorKartu])
-
-  // const [isBpjsJkn, setIsBpjsJkn] = useState(false)
+  }, [nomorRujukan])
 
   useEffect(() => {
-    console.log(state)
-  }, [dataPasien])
+    if (dokter !== '') {
+      setsdisabled(false)
+    } else {
+      setsdisabled(true)
+    }
+  }, [dokter])
+  useEffect(() => {
+    // Check if 'registrasi' exists in localStorage
+    const data = localStorage.getItem('registrasi')
+    if (data) {
+      setDataRegistrasi(JSON.parse(data)) // Parse the JSON string into an object
+    }
+  }, [])
 
   // Format tanggal menggunakan moment.js
   const formatTanggal = (dateString) => {
     return dateString ? moment(dateString).format('YYYY-MM-DD') : ''
   }
-
+  const today = new Date()
+  if (
+    dataRegistrasi &&
+    formatTanggal(today) <= dataRegistrasi.response.tanggalperiksa
+  ) {
+    return (
+      <div className='row'>
+        <div className='col-md-6 mb-4'>
+          <div className='card border-0 rounded shadow-sm'>
+            <div className='card-body'>
+              <h5>
+                <i className='fa fa-user-alt'></i> ANTRIAN ANDA
+              </h5>
+              <hr />
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NOMOR ANTRIAN
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataRegistrasi.response.nomorantrean}
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>KODE BOOKING
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataRegistrasi.response.kodebooking}
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>Jenis Pasien
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataRegistrasi.response.jenispasien}
+                  placeholder='Nama Pasien'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>KLINIK
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataRegistrasi.response.namapolirs}
+                  placeholder='Tempat Lahir'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>DOKTER
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataRegistrasi.response.namadokter}
+                  placeholder='Tempat Lahir'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>Jam Pelayanan
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={
+                    dataRegistrasi.response.tanggalperiksa +
+                    ' ' +
+                    dataRegistrasi.response.estimasijampelayanan +
+                    ' WITA'
+                  }
+                  placeholder='Tempat Lahir'
+                  readOnly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='col-md-6 mb-4'>
+          <div className='card border-0 rounded shadow-sm'>
+            <div className='card-body'>
+              <h5>
+                <i className='fa fa-user-alt'></i> DATA PASIEN
+              </h5>
+              <hr />
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NO. REKAM
+                  MEDIS
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataPasien.NORM}
+                  placeholder='No. Rekam Medis'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NAMA
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataPasien.NAMA}
+                  placeholder='Nama Pasien'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>TEMPAT LAHIR
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataPasien.TEMPAT_LAHIR}
+                  placeholder='Tempat Lahir'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>TGL. LAHIR
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={formatTanggal(dataPasien.TANGGAL_LAHIR)}
+                  placeholder='Tanggal Lahir'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NIK
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataPasien.KARTUIDENTITAS[0].NOMOR}
+                  placeholder='NIK Pasien'
+                  readOnly
+                />
+              </div>
+              <div className='input-group mb-3'>
+                <span className='input-group-text'>
+                  <i className='fa fa-check'>&nbsp;&nbsp;&nbsp;</i>NO. HP
+                </span>
+                <input
+                  type='text'
+                  className='form-control'
+                  value={dataPasien.KONTAK[0].NOMOR}
+                  placeholder='Kontak Pasien'
+                  readOnly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className='row'>
       <div className='col-md-6 mb-4'>
@@ -291,7 +534,11 @@ export default function CardRegistrasi() {
               <select
                 className='form-control'
                 value={openjamin}
-                onChange={(e) => setoPenjamin(e.target.value)}
+                onChange={(e) => {
+                  setoPenjamin(e.target.value)
+                  setDokter('')
+                  setJadwals([])
+                }}
               >
                 {penjamin &&
                   penjamin.map((d, k) => {
@@ -305,7 +552,12 @@ export default function CardRegistrasi() {
             </div>
             <div className='mb-3 mt-2'>
               <label>Pasien Prioritas</label>
-              <select value='' onChange='' className='form-control' required>
+              <select
+                className='form-control'
+                required
+                value={pasienPrioritas}
+                onChange={(e) => setPasienPrioritas(e.target.value)}
+              >
                 <option value=''>Pilih Prioritas</option>
                 <option value='lanjutUsia'>Lanjut Usia 65 Tahun</option>
                 <option value='ibuHamil'>Ibu Hamil / Menyusui</option>
@@ -374,6 +626,7 @@ export default function CardRegistrasi() {
                 />
               </div>
             )}
+
             <div className='form-group custom-select select'>
               <label className='mb-1'>Klinik Tujuan</label>
               <select
@@ -381,40 +634,69 @@ export default function CardRegistrasi() {
                 value={klinik}
                 onChange={(e) => {
                   setKlinik(e.target.value)
+                  setDokter('')
                 }}
                 disabled={openjamin === '2' ? true : false}
               >
+                <option value='' disabled>
+                  Pilih Klinik
+                </option>
                 {okliniks &&
                   okliniks.map((d, k) => {
                     let KODEPOLI = ''
                     if (d.REFERENSI.PENJAMIN?.BPJS) {
                       KODEPOLI = d.REFERENSI.PENJAMIN.BPJS.KDPOLI
                     }
-                    return (
-                      <option key={k} value={KODEPOLI}>
-                        {d.DESKRIPSI + ' (' + KODEPOLI + ')'}
-                      </option>
-                    )
+                    if (KODEPOLI) {
+                      return (
+                        <option key={k} value={KODEPOLI}>
+                          {d.DESKRIPSI + ' (' + KODEPOLI + ')'}
+                        </option>
+                      )
+                    }
                   })}
               </select>
             </div>
+            <div className='form-group mt-2'>
+              <label className='mb-1'>Loket</label>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Loket'
+                value={loket}
+                disabled
+              />
+            </div>
             <div className='form-group custom-select select'>
               <label className='mb-1'>Pilih Dokter</label>
-              <select className='form-control mb-3' defaultValue=''>
+              <select
+                className='form-control mb-3'
+                onChange={(e) => {
+                  setDokter(e.target.value)
+                }}
+                value={dokter}
+              >
                 <option value='' disabled>
                   Pilih Dokter
                 </option>
                 {jadwals.map((jadwal) => (
-                  <option key={jadwal.ID} value={jadwal.KD_DOKTER}>
+                  <option key={jadwal.ID} value={JSON.stringify(jadwal)}>
                     {jadwal.NM_DOKTER} ({jadwal.NM_HARI} {jadwal.JAM})
                   </option>
                 ))}
               </select>
             </div>
             <button
-              // to='/ambil-antrian'
+              onClick={() => {
+                submitAntrian()
+                localStorage.setItem('datapasien', JSON.stringify(dataPasien))
+                localStorage.setItem(
+                  'nomorRujukan',
+                  JSON.stringify(nomorRujukan)
+                )
+              }}
               className='btn btn-success shadow-sm rounded-sm px-4 w-100'
-              disabled={openjamin === '2' && !dataRujukanDitemukan} // Disable tombol berdasarkan status rujukan
+              disabled={sdisabled}
             >
               AMBIL ANTRIAN
             </button>

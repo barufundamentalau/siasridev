@@ -85,6 +85,9 @@ Route::prefix('web')->group(function () {
     //route informations index
     Route::get('/informations', [App\Http\Controllers\Api\Web\InformationController::class, 'index', ['as' => 'web']]);
 
+    //route abouts
+    Route::get('/abouts', [App\Http\Controllers\Api\Web\AboutController::class, 'index', ['as' => 'web']]);
+
     //route informations show
     Route::get(
         '/informations/{slug?}',

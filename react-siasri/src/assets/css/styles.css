@@ -217,6 +217,11 @@ html:not([dir='rtl']) .mfe-3 {
   width: 100%;
 }
 
+.layanan-container {
+  height: 675px;
+  width: 100%;
+}
+
 .mapboxgl-ctrl-geocoder {
   font: 15px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
   position: relative;

@@ -112,6 +112,9 @@ function WebHeader() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
+            <Nav.Link as={Link} to='/layanan' className='fw-bold text-white'>
+              <i className='fa fa-podcast'></i> LAYANAN
+            </Nav.Link>
             <Nav className='me-auto'>
               {token && (
                 <>
@@ -184,9 +187,6 @@ function WebHeader() {
                   <i className='fa fa-long-arrow-alt-right'></i>
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link as={Link} to='/layanan' className='fw-bold text-white'>
-                <i className='fa fa-podcast'></i> LAYANAN
-              </Nav.Link>
               <Nav.Link
                 as={Link}
                 to='/jknmobile'
@@ -199,7 +199,7 @@ function WebHeader() {
                 to='/tentang-si-asri'
                 className='fw-bold text-white'
               >
-                <i className='fa fa-info'></i> TENTANG
+                <i className='fa fa-question'></i> TENTANG
               </Nav.Link>
             </Nav>
             <Nav>

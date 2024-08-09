@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 // import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import toast from 'react-hot-toast'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function CardPendaftaran() {
   //title page
@@ -16,12 +16,11 @@ function CardPendaftaran() {
   const [jenisPasien, setJenisPasien] = useState('lama')
   const [norm, setNorm] = useState('')
   const [tanggalLahir, setTanggalLahir] = useState('')
-  // const [nikPasien, setNikPasien] = useState('')
-  // const [namaPasien, setNamaPasien] = useState('')
-  // const [tempatLahir, setTempatLahir] = useState('')
-  // const [kontakPasien, setKontakPasien] = useState('')
-  // const [noRekamMedis, setNoRekamMedis] = useState('')
-  // const [jenisDisabilitas, setJenisDisabilitas] = useState('')
+  const [nikPasien, setNikPasien] = useState('')
+  const [namaPasien, setNamaPasien] = useState('')
+  const [tempatLahir, setTempatLahir] = useState('')
+  const [kontakPasien, setKontakPasien] = useState('')
+  const [jenisDisabilitas, setJenisDisabilitas] = useState('')
 
   //state loading
   const [loading, setLoading] = useState(false)
@@ -37,7 +36,9 @@ function CardPendaftaran() {
     setLoading(true)
 
     const formattedTanggalLahir = tanggalLahir.split('-').join('-')
-    const url = `http://127.0.0.1:8000/api/web/getpasien/?norm=${norm}&tglLahir=${formattedTanggalLahir}`
+    const url = `${
+      import.meta.env.VITE_APP_BASEURL
+    }/api/web/getpasien/?norm=${norm}&tglLahir=${formattedTanggalLahir}`
 
     try {
       const response = await fetch(url)
@@ -76,7 +77,6 @@ function CardPendaftaran() {
         })
       }
     } catch (error) {
-      console.error('Error:', error)
       toast.error('Terjadi kesalahan saat mengambil data.', {
         duration: 4000,
         position: 'top-right',
@@ -86,11 +86,51 @@ function CardPendaftaran() {
           color: '#fff',
         },
       })
+      console.error('Error:', error)
     } finally {
       setLoading(false)
     }
   }
+  const pasienBaruHandler = async (event) => {
+    event.preventDefault()
+    setLoading(true)
 
+    const formattedTanggalLahir = tanggalLahir.split('-').join('-')
+    const foundPatient = {
+      NORM: 0,
+      NAMA: namaPasien,
+      TEMPAT_LAHIR: tempatLahir,
+      TANGGAL_LAHIR: tanggalLahir,
+      KARTUIDENTITAS: [
+        {
+          NOMOR: nikPasien,
+        },
+      ],
+      KONTAK: [
+        {
+          NOMOR: kontakPasien,
+        },
+      ],
+    }
+    const penjamin = {}
+
+    navigate('/registrasi', {
+      state: {
+        dataPasien: foundPatient,
+        penjamin: [],
+      },
+    })
+
+    toast.success('Data pasien berhasil ditemukan!', {
+      duration: 4000,
+      position: 'top-right',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    })
+  }
   return (
     <div className='card border-0 rounded shadow-sm'>
       <div className='card-body'>
@@ -129,11 +169,18 @@ function CardPendaftaran() {
         </div>
         <hr />
         {jenisPasien === 'baru' && (
-          <form onSubmit=''>
+          <form onSubmit={pasienBaruHandler}>
             <div className='row'>
               <div className='col-md-6 mb-3'>
                 <label>Pasien Prioritas:</label>
-                <select value='' onChange='' className='form-control' required>
+                <select
+                  value={jenisDisabilitas}
+                  onChange={(e) => {
+                    setJenisDisabilitas(e.target.value)
+                  }}
+                  className='form-control'
+                  required
+                >
                   <option value=''>Pilih Prioritas</option>
                   <option value='lanjutUsia'>Lanjut Usia 65 Tahun</option>
                   <option value='ibuHamil'>Ibu Hamil / Menyusui</option>
@@ -147,8 +194,10 @@ function CardPendaftaran() {
                 <label>Nik Pasien:</label>
                 <input
                   type='text'
-                  value=''
-                  onChange=''
+                  value={nikPasien}
+                  onChange={(e) => {
+                    setNikPasien(e.target.value)
+                  }}
                   className='form-control'
                   placeholder='Masukkan Nik Pasien'
                   required
@@ -158,8 +207,10 @@ function CardPendaftaran() {
                 <label>Nama Pasien:</label>
                 <input
                   type='text'
-                  value=''
-                  onChange=''
+                  value={namaPasien}
+                  onChange={(e) => {
+                    setNamaPasien(e.target.value)
+                  }}
                   className='form-control'
                   placeholder='Masukkan Nama Pasien'
                   required
@@ -170,8 +221,10 @@ function CardPendaftaran() {
                 <label>Kontak Pasien:</label>
                 <input
                   type='text'
-                  value=''
-                  onChange=''
+                  value={kontakPasien}
+                  onChange={(e) => {
+                    setKontakPasien(e.target.value)
+                  }}
                   className='form-control'
                   placeholder='Masukkan Kontak Pasien'
                   required
@@ -181,8 +234,10 @@ function CardPendaftaran() {
                 <label>Tempat Lahir:</label>
                 <input
                   type='text'
-                  value=''
-                  onChange=''
+                  value={tempatLahir}
+                  onChange={(e) => {
+                    setTempatLahir(e.target.value)
+                  }}
                   className='form-control'
                   placeholder='Masukkan Tempat Lahir'
                   required
@@ -192,19 +247,28 @@ function CardPendaftaran() {
                 <label>Tanggal Lahir:</label>
                 <input
                   type='date'
-                  value=''
-                  onChange=''
+                  value={tanggalLahir}
+                  onChange={(e) => {
+                    setTanggalLahir(e.target.value)
+                  }}
                   className='form-control'
                   required
                 />
               </div>
               <div className='col-md-12'>
-                <Link
-                  to='/registrasi'
+                <button
+                  type='submit'
                   className='btn btn-success shadow-sm rounded-sm px-4 w-100'
+                  disabled={loading}
+                >
+                  {loading ? 'LOADING...' : 'LANJUT'}
+                </button>
+                {/* <Link
+                  to="/registrasi"
+                  className="btn btn-success shadow-sm rounded-sm px-4 w-100"
                 >
                   Lanjut
-                </Link>
+                </Link> */}
               </div>
             </div>
           </form>

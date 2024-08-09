@@ -98,6 +98,16 @@ function Sidebar() {
         </Link>
         <Link
           className={
+            splitLocation[2] === 'abouts'
+              ? 'list-group-item list-group-item-action list-group-item-light p-3 text-uppercase active'
+              : 'list-group-item list-group-item-action list-group-item-light p-3 text-uppercase'
+          }
+          to='/admin/abouts'
+        >
+          <i className='fa fa-question me-2'></i> TENTANG
+        </Link>
+        <Link
+          className={
             splitLocation[2] === 'users'
               ? 'list-group-item list-group-item-action list-group-item-light p-3 text-uppercase active'
               : 'list-group-item list-group-item-action list-group-item-light p-3 text-uppercase'

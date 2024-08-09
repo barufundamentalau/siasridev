@@ -7,9 +7,6 @@ import { Carousel } from 'react-bootstrap'
 //import BASE URL API
 import Api from '../../api'
 
-// import komponen loading
-import Loading from '../../components/utilities/Loading'
-
 function Slider() {
   //state sliders
   const [sliders, setSliders] = useState([])

@@ -70,7 +70,7 @@ const Card10Kasus = () => {
     const { tglAwal, tglAkhir } = getDateRange(radioValue)
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/web/diagnosa/?tglAwal=${tglAwal}&tglAkhir=${tglAkhir}`
+        `https://apiasriv2.rsudkk.work/api/web/diagnosa/?tglAwal=${tglAwal}&tglAkhir=${tglAkhir}`
       )
 
       // Log status dan respons
